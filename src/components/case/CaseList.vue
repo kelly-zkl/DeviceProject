@@ -4,7 +4,7 @@
       <headerTitle></headerTitle>
       <el-row>
         <el-col :span="16" align="left" class="tab-card">
-          <el-tabs v-model="query.status" @tab-click="handleType" type="border-card">
+          <el-tabs v-model="activeItem" @tab-click="handleType" type="border-card">
             <el-tab-pane label="进行中" name="EXECUTION"></el-tab-pane>
             <el-tab-pane label="已结案" name="HANDLED"></el-tab-pane>
           </el-tabs>
@@ -16,31 +16,31 @@
       <el-row style="padding: 10px 0">
         <el-col :span="18" align="left">
           <el-form :inline="true" :model="query" align="left">
-            <el-form-item>
+            <el-form-item style="margin-bottom: 10px">
               <el-input v-model="query.caseName" placeholder="案件名称" size="medium" style="width: 160px"
                         :maxlength=20></el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item style="margin-bottom: 10px">
               <el-input v-model="query.caseType" placeholder="案件类型" size="medium" style="width: 160px"
                         :maxlength=20></el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item style="margin-bottom: 10px">
               <el-cascader :options="provinceList" :props="props" @change="areaChange" change-on-select
                            v-model="areaList" style="width: 180px" placeholder="案发地点" size="medium"
                            filterable clearable>
               </el-cascader>
             </el-form-item>
-            <el-form-item>
+            <el-form-item style="margin-bottom: 10px">
               <el-date-picker v-model="caseTime" type="datetimerange" range-separator="至"
                               start-placeholder="案发开始日期" size="medium" end-placeholder="结束日期" clearable
                               :default-time="['00:00:00', '23:59:59']" value-format="timestamp"
                               :picker-options="pickerBeginDate">
               </el-date-picker>
             </el-form-item>
-            <el-form-item>
+            <el-form-item style="margin-bottom: 10px">
               <el-button type="primary" size="medium" @click="getData()">搜索</el-button>
             </el-form-item>
-            <el-form-item>
+            <el-form-item style="margin-bottom: 10px">
               <el-button size="medium" @click="clearData()">重置</el-button>
             </el-form-item>
           </el-form>
@@ -76,7 +76,7 @@
         <!--v-show="query.status=='HANDLED'" :formatter="formatterAddress"></el-table-column>-->
         <el-table-column align="left" label="操作" width="160">
           <template slot-scope="scope">
-            <el-button type="text" @click="sels = [];sels.push(scope.row.id);finishCase()"
+            <el-button type="text" @click="sels = [];sels.push(scope.row);finishCase()"
                        v-show="scope.row.status=='EXECUTION'">结案
             </el-button>
             <el-button type="text" @click="gotoDetail(scope.row)">查看</el-button>
@@ -161,8 +161,9 @@
         areaList: [],
         provinceList: json,
         caseTime: '',
-        query: {page: 1, size: 10, status: 'EXECUTION'},
+        query: {page: 1, size: 10},
         caseTypes: [{value: '1', label: '盗窃'}, {value: '2', label: '抢劫'}, {value: '3', label: '吸毒'}],
+        activeItem: 'EXECUTION',
         count: 0,
         sels: [],
         caseList: [],
@@ -263,9 +264,9 @@
       //结案
       finishCase() {
         this.$confirm('确认已结案?', '提示', {type: 'info'}).then(() => {
-          var param = [];
+          let param = [];
           this.sels.forEach((item) => {
-            var caseItem = {id: item.id, handlerBy: 'superAdmin', status: 'HANDLED'};
+            let caseItem = {id: item.id, handlerBy: 'superAdmin', status: 'HANDLED'};
             param.push(caseItem);
           });
           this.$post('/case/batchUpdateStatus', param, '操作成功').then((data) => {
@@ -335,6 +336,7 @@
           delete this.query['caseTime'];
           delete this.query['caseToTime'];
         }
+        this.query.status = this.activeItem;
         this.listLoading = true;
         this.$post('/case/query', this.query).then((data) => {
           this.caseList = data.data.list;

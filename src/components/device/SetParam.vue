@@ -694,11 +694,11 @@
                     }
                     if (this.deviceForm === 'CON_OUTDOOR_POLE') {//大站
                       this.opDeviceParameter.tacPeriod = subModuleParam.tacPeriod + "";
+                      this.opDeviceParameter.syncEarfcn = this.opDeviceParameter.syncEarfcn + "";
                     } else {
                       this.opDeviceParameter.tacPeriod = this.opDeviceParameter.tacPeriod + "";
                     }
                     this.hopParam = this.opDeviceParameter.hopParam;
-                    this.opDeviceParameter.syncEarfcn = this.opDeviceParameter.syncEarfcn + "";
                     this.opDeviceParameter.ccPeriod = subModuleParam.ccPeriod + "";
                     this.powerValue = subModuleParam.powerValue;
                     this.wirelessSwitch = (subModuleParam.wirelessSwitch == 1);
@@ -835,7 +835,7 @@
               });
             }
           });
-        } else {
+        } else {//大站
           if (this.changeBcc(this.opDeviceParameter.bcc)) {
             this.$refs[forName].validate((valid) => {
               if (valid) {

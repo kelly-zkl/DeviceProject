@@ -43,9 +43,28 @@
       </el-tabs>
       <el-table :data="networkData" v-loading="listLoading" stripe style="margin-bottom: 30px">
         <el-table-column align="center" type="index" label="序号" width="65"></el-table-column>
-        <el-table-column align="left" v-for="item in defaultProps" :key="item.value" :formatter="formatterAddress"
-                         :prop="item.value" :label="item.name" min-width="100" max-width="200"></el-table-column>
+        <el-table-column align="left" label="频点" prop="bcc" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="c1" prop="c1" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="c2" prop="c2" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="rsrp" prop="rsrp" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="邻区列表" prop="nCellInfo" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="上报时间" prop="upTime" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="center" label="操作">
+          <template slot-scope="scope">
+            <el-button type="text" @click="cells=scope.row.nCellInfo;runCellList=true">查看邻区列表</el-button>
+          </template>
+        </el-table-column>
       </el-table>
+      <!--邻区列表-->
+      <el-dialog title="邻区列表" :visible.sync="runCellList" center>
+        <el-table :data="cells" stripe>
+          <el-table-column align="center" type="index" label="序号" width="65"></el-table-column>
+          <el-table-column align="left" label="频点" prop="bcc" :formatter="formatterAddress"></el-table-column>
+          <el-table-column align="left" label="c1" prop="c1" :formatter="formatterAddress"></el-table-column>
+          <el-table-column align="left" label="c2" prop="c2" :formatter="formatterAddress"></el-table-column>
+          <el-table-column align="left" label="rsrp" prop="rsrp" :formatter="formatterAddress"></el-table-column>
+        </el-table>
+      </el-dialog>
     </section>
   </div>
 </template>
@@ -53,16 +72,16 @@
   export default {
     data() {
       return {
+        runCellList: false,
         networkData: [],
+        cells: [],
         gsmSniffer: {snifferMode: 0, selectFreqMode: 10, runTime: new Date(), snifferCycle: 1},
         listLoading: false,
         activeItem: "移动(GSM)",
-        activeName: [{moduleID: 1, name: '移动(GSM)', type: 'GSM1'}, {moduleID: 2, name: '联通(GSM)', type: 'GSM1'}],
+        activeName: [{moduleID: -1, name: '移动(GSM)', type: 'GSM1'}, {moduleID: -1, name: '联通(GSM)', type: 'GSM2'}],
         query: {page: 1, size: 10},
         count: 0,
         deviceId: this.$route.query.deviceId || '',
-        defaultProps: [{value: 'bcchNumber', name: '频点'}, {value: 'c1', name: 'c1'},
-          {value: 'c2', name: 'c2'}, {value: 'rssi', name: 'rssi'}, {value: 'upTime', name: '上报时间'}],
         autoBccModes: [{value: 10, label: '手动配置'}, {value: 2, label: '周围宏站选次弱'}, {value: 8, label: '宏站邻区选次弱'}],
         snifferModes: [{value: 0, label: '手动'}, {value: 1, label: '自动'}],
         rules: {
@@ -90,18 +109,7 @@
           }
         })
       },
-
       handleClick(tab, event) {
-        if (this.getNetwork(this.activeItem) === 'GSM1') {//2G
-          this.defaultProps = [{value: 'bcchNumber', name: '频点'}, {value: 'c1', name: 'c1'},
-            {value: 'c2', name: 'c2'}, {value: 'rssi', name: 'rssi'}, {value: 'upTime', name: '上报时间'}];
-        } else {
-          this.defaultProps = [{value: 'earfcn', name: '频点'}, {value: 'pci', name: 'pci'},
-            {value: 'band', name: 'band'}, {value: 'rsrp', name: 'rsrp'},
-            {value: 'network', name: 'network'}, {value: 'frameOffset', name: '帧偏移'},
-            {value: 'freqOffset', name: '频偏'}, {value: 'plmnID', name: 'plmnID'},
-            {value: 'priority', name: '小区优先级'}, {value: 'upTime', name: '上报时间'}];//{value: 'ncellList', name: '邻区列表'}
-        }
         this.networkData = [];
         this.getNetworkData();
       },
@@ -130,7 +138,9 @@
       //格式化内容   有数据就展示，没有数据就显示--
       formatterAddress(row, column) {
         if (column.property === 'upTime') {
-          return row.upTime ? row.upTime !== 0 ? $.Data.formatDate(new Date(row.upTime), 'yyyy-MM-dd hh:mm:ss') : '--' : '--';
+          return row.upTime ? row.upTime !== 0 ? $.Data.formatDate(new Date(row.upTime * 1000), 'yyyy-MM-dd hh:mm:ss') : '--' : '--';
+        } else if (column.property === 'nCellInfo') {
+          return row.nCellInfo ? row.nCellInfo.length + '个' : '0个';
         } else {
           return row[column.property];
 //            ? row[column.property] : '--';
@@ -145,11 +155,7 @@
           }, 500);
           if (data.code === '000000') {
             if (data.data) {
-              data.data.forEach((item) => {//移动2G/联通2G数据一样
-                if (this.getModuleID(this.activeItem) === item.moduleId || (this.getModuleID(this.activeItem) === 2 && item.moduleId === 1)) {
-                  this.networkData.push(item);
-                }
-              });
+              this.networkData = data.data
             } else {
               this.networkData = [];
             }

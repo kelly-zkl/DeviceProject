@@ -313,18 +313,18 @@
       },
       //清除查询条件
       clearData() {
-        if (this.activeItem === "result") {
+        if (this.activeItem === "collision") {
           this.queryCollision = {page: 1, size: 10};
           this.date1 = '';
           this.getCollisions();
         } else {
           this.queryFollow = {page: 1, size: 10};
-          this.caseTime = '';
+          this.date1 = '';
           this.getFollows();
         }
       },
       pageChange(index) {
-        if (this.activeItem === "result") {
+        if (this.activeItem === "collision") {
           this.queryCollision.page = index;
           this.getCollisions();
         } else {
@@ -333,7 +333,7 @@
         }
       },
       handleSizeChange(val) {
-        if (this.activeItem === "result") {
+        if (this.activeItem === "collision") {
           this.queryCollision.size = val;
           this.getCollisions();
         } else {

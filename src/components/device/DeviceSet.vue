@@ -21,20 +21,22 @@
           <el-tab-pane label="侦码数据" name="fourth" v-if="getButtonVial('terminate:query')">
             <terminal @getDevice="getDevice" class="card-margin"></terminal>
           </el-tab-pane>
-          <el-tab-pane label="扫频工具" name="fifth" v-if="(deviceForm == 'CON_OUTDOOR_POLE' && (getButtonVial('device:get:sniffer') ||
-                getButtonVial('device:sniffer') || getButtonVial('set:autoSnifferParam')))||(deviceType=='2'||deviceType=='3'||
-            deviceType=='4'||deviceType=='5'||deviceType=='6'||deviceType=='C')">
-            <gsmScan @getDevice="getDevice" class="card-margin" v-if="deviceType=='2'||deviceType=='3'||
-            deviceType=='4'||deviceType=='5'||deviceType=='6'||deviceType=='C'"></gsmScan>
-            <scanTool @getDevice="getDevice" class="card-margin" v-else></scanTool>
+          <el-tab-pane label="扫频工具" name="fifth" v-if="(getButtonVial('device:get:sniffer') ||
+                getButtonVial('device:sniffer') || getButtonVial('set:autoSnifferParam'))&&(deviceType=='2'||deviceType=='3'||
+                deviceType=='4'||deviceType=='5'||deviceType=='6'||deviceType=='C'||deviceForm == 'CON_OUTDOOR_POLE')">
+            <gsmScan @getDevice="getDevice" class="card-margin" v-if="(deviceType=='2'||deviceType=='3'||
+            deviceType=='4'||deviceType=='5'||deviceType=='6'||deviceType=='C')&&deviceForm == 'CON_OUTDOOR_MOCRO'"></gsmScan>
+            <scanTool @getDevice="getDevice" class="card-margin" v-if="deviceForm == 'CON_OUTDOOR_POLE'"></scanTool>
           </el-tab-pane>
-          <!--v-if="deviceForm == 'CON_OUTDOOR_MOCRO' && (getButtonVial('set:log:getParam') ||
-                getButtonVial('set:log:sendParam'))"-->
+          <el-tab-pane label="PA设置" name="sixth" v-if="selfDeviceType == 'ZDK' && (getButtonVial('device:get:deviceStatus')
+           || getButtonVial('device:get:deviceParameter:*'))">
+            <PaSet @getDevice="getDevice" class="card-margin"></PaSet>
+          </el-tab-pane>
           <el-tab-pane label="日志设置" name="seven" v-if="deviceForm == 'CON_OUTDOOR_MOCRO' && (getButtonVial('set:log:getParam') ||
                 getButtonVial('set:log:sendParam'))">
             <LogSet @getDevice="getDevice" class="card-margin"></LogSet>
           </el-tab-pane>
-          <el-tab-pane label="任务列表" name="sixth" v-if="getButtonVial('device:get:deviceMessage')">
+          <el-tab-pane label="任务列表" name="eight" v-if="getButtonVial('device:get:deviceMessage')">
             <taskList @getDevice="getDevice" class="card-margin"></taskList>
           </el-tab-pane>
         </el-tabs>
@@ -43,15 +45,16 @@
   </div>
 </template>
 <script>
-  import baseInfo from '../device/BaseInfo'
-  import setParam from '../device/SetParam'
-  import band4 from '../device/4band'
-  import deviceStatus from '../device/DeviceStatus'
-  import terminal from '../device/TerminalData'
-  import scanTool from '../device/NetworkData'
-  import gsmScan from '../device/GsmScan'
-  import taskList from '../device/TaskList'
+  import baseInfo from '../device/BaseInfo';
+  import setParam from '../device/SetParam';
+  import band4 from '../device/4band';
+  import deviceStatus from '../device/DeviceStatus';
+  import terminal from '../device/TerminalData';
+  import scanTool from '../device/NetworkData';
+  import gsmScan from '../device/GsmScan';
+  import taskList from '../device/TaskList';
   import LogSet from "../log/LogSet.vue";
+  import PaSet from "../device/PaSet.vue";
 
   export default {
     data() {
@@ -61,7 +64,8 @@
         deviceForm: this.$route.query.deviceForm || '',
         groupId: this.$route.query.groupId || '',
         band4: 0,
-        deviceType: ''
+        deviceType: '',
+        selfDeviceType: ''
       }
     },
     methods: {
@@ -82,6 +86,7 @@
               if (data.data) {
                 this.band4 = data.data.band4;
                 this.deviceType = data.data.deviceType;
+                this.selfDeviceType = data.data.selfDeviceType;
               }
             }
           }
@@ -102,7 +107,7 @@
     },
     components: {
       baseInfo, setParam, band4, deviceStatus, terminal,
-      scanTool, gsmScan, taskList, LogSet
+      scanTool, gsmScan, taskList, LogSet, PaSet
     }
   }
 </script>

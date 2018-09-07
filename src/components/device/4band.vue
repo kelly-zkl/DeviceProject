@@ -578,15 +578,12 @@
             if (data.code === '000000') {
               if (data.data) {
                 this.deviceType = data.data.deviceType;
-                console.log(this.deviceType);
                 if (this.deviceType === '2' || this.deviceType === '3' || this.deviceType === '4' ||
                   this.deviceType === '5' || this.deviceType === '6' || this.deviceType === 'C') {
-                  console.log(this.deviceType === 'C');
                   this.activeName = [{moduleID: -1, name: '移动（GSM）', type: 'GSMCMCC'},
                     {moduleID: -1, name: '联通（GSM）', type: 'GSMCMUC'}, {moduleID: 0, name: '移动', type: 'M'},
                     {moduleID: 1, name: '联通', type: 'U'}, {moduleID: 2, name: '电信', type: 'T'}];
                   this.activeItem = '移动（GSM）'
-                  console.log(this.activeName);
                 }
 
                 this.clear();

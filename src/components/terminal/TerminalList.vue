@@ -39,13 +39,13 @@
           </el-row>
           <el-table :data="terminateData" class="center-block" stripe>
             <el-table-column align="center" type="index" label="序号" width="65"></el-table-column>
-            <el-table-column align="left" prop="deviceId" label="设备ID" min-width="100" max-width="200"
+            <el-table-column align="left" prop="deviceId" label="设备ID" min-width="150" max-width="250"
                              :formatter="formatterAddress"></el-table-column>
-            <el-table-column align="left" prop="imei" label="IMEI" min-width="150" max-width="200"
+            <el-table-column align="left" prop="imei" label="IMEI" min-width="100" max-width="200"
                              :formatter="formatterAddress"></el-table-column>
             <el-table-column align="left" prop="imsi" label="IMSI" min-width="150" max-width="200"
                              :formatter="formatterAddress"></el-table-column>
-            <el-table-column align="left" prop="tmsi" label="TMSI" min-width="150" max-width="200"
+            <el-table-column align="left" prop="tmsi" label="TMSI" min-width="100" max-width="200"
                              :formatter="formatterAddress"></el-table-column>
             <el-table-column align="left" prop="uptime" label="抓取时间" width="170"
                              :formatter="formatterAddress"></el-table-column>
@@ -98,13 +98,13 @@
           </el-row>
           <el-table :data="list10" class="center-block" v-loading="listLoading" stripe>
             <el-table-column align="center" type="index" label="序号" width="65"></el-table-column>
-            <el-table-column align="left" prop="deviceId" label="设备ID" min-width="100" max-width="200"
+            <el-table-column align="left" prop="deviceId" label="设备ID" min-width="150" max-width="250"
                              :formatter="formatterAddress"></el-table-column>
-            <el-table-column align="left" prop="imei" label="IMEI" min-width="150" max-width="200"
+            <el-table-column align="left" prop="imei" label="IMEI" min-width="100" max-width="200"
                              :formatter="formatterAddress"></el-table-column>
             <el-table-column align="left" prop="imsi" label="IMSI" min-width="150" max-width="200"
                              :formatter="formatterAddress"></el-table-column>
-            <el-table-column align="left" prop="tmsi" label="TMSI" min-width="150" max-width="200"
+            <el-table-column align="left" prop="tmsi" label="TMSI" min-width="100" max-width="200"
                              :formatter="formatterAddress"></el-table-column>
             <el-table-column align="left" prop="uptime" label="抓取时间" width="170"
                              :formatter="formatterAddress"></el-table-column>

@@ -2,13 +2,8 @@
   <div>
     <section class="content">
       <el-form label-width="140px" label-position="left">
-        <!--<el-row>-->
-        <!--<el-col :span="24" style="text-align: left">-->
-        <!--<h4>侦码数据<span style="font-size: 15px;color: #888;margin-left: 10px">设备ID：{{deviceId}}</span></h4>-->
-        <!--</el-col>-->
-        <!--</el-row>-->
         <h4 style="text-align: left;margin-top: 0" v-show="deviceForm === 'CON_OUTDOOR_POLE'">侦码设置</h4>
-        <div class="center-block add-appdiv" v-show="deviceForm === 'CON_OUTDOOR_POLE'">
+        <div class="center-block add-appdiv" v-show="deviceForm === 'CON_OUTDOOR_POLE'" style="margin-bottom: 30px">
           <el-row style="margin-left: 20px">
             <el-col :span="11">
               <el-form-item label="侦码" style="margin: 0">
@@ -30,7 +25,7 @@
           </el-row>
         </div>
       </el-form>
-      <h4 style="text-align: left;margin-top: 30px">侦码数据
+      <h4 style="text-align: left">侦码数据
         <span style="color: #666;font-size: 14px;margin-left: 10px">总数{{couple}}条</span>
       </h4>
       <el-row style="margin:0 0 10px 20px">
