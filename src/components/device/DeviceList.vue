@@ -387,7 +387,7 @@
         }
         this.addDevice.groupId = JSON.parse(sessionStorage.getItem("user")).groupId;
         this.$refs['addDevice'].validate((valid) => {
-            if (valid) {
+          if (valid) {
             this.$post("device/add", this.addDevice, "创建成功").then((data) => {
               this.addDevice = {deviceId: '', deviceName: '', deviceForm: '', deviceType: ''};
               this.runningAddDevice = false;

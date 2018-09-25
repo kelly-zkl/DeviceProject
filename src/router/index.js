@@ -12,6 +12,9 @@ import DeviceStatus from "../components/device/DeviceStatus.vue";
 import NetworkData from "../components/device/NetworkData.vue";
 import TaskList from "../components/device/TaskList.vue";
 
+import CameraList from "../components/camera/CameraList.vue";
+import AddCamera from "../components/camera/AddCamera.vue";
+
 //侦码管理
 import TerminalList from "../components/terminal/TerminalList.vue";
 import BlackManager from "../components/terminal/BlackManager.vue";
@@ -79,7 +82,7 @@ export default new Router({
       path: '/deviceList',
       name: '设备管理',
       component: Home,
-      icon: 'fa  fa-tv',
+      icon: 'fa fa-tv',
       index: '2',
       leaf: true,//只有一个节点
       children: [
@@ -88,11 +91,23 @@ export default new Router({
       ]
     },
     {
+      path: '/cameraList',
+      name: '相机管理',
+      component: Home,
+      icon: 'fa fa-camera',
+      index: '3',
+      leaf: true,//只有一个节点
+      children: [
+        {path: '/cameraList', component: CameraList, name: '相机设备列表', hidden: true},
+        {path: '/addCamera', component: AddCamera, name: '添加/修改相机设备', hidden: true},
+      ]
+    },
+    {
       path: '/terminalList',
       name: '侦码管理',
       component: Home,
       icon: 'fa fa-cloud',
-      index: '3',
+      index: '4',
       leaf: true,//只有一个节点
       children: [
         {path: '/terminalList', component: TerminalList, name: 'IMSI数据'},
@@ -106,7 +121,7 @@ export default new Router({
       name: '告警管理',
       component: Home,
       icon: 'fa fa-warning',
-      index: '4',
+      index: '5',
       leaf: true,//只有一个节点
       children: [
         {path: '/warningManager', component: WarningManager, name: '告警列表', hidden: true},
@@ -118,7 +133,7 @@ export default new Router({
       name: '版本管理',
       component: Home,
       icon: 'fa fa-upload',
-      index: '5',
+      index: '6',
       leaf: true,//只有一个节点
       children: [
         {path: '/versionManager', component: VersionManager, name: '版本列表', hidden: true},
@@ -131,7 +146,7 @@ export default new Router({
       name: '设备日志',
       component: Home,
       icon: 'fa fa-file-text-o',
-      index: '6',
+      index: '7',
       leaf: true,//只有一个节点
       children: [
         {path: '/deviceLogs', component: DeviceLogs, name: '设备日志列表', hidden: true}
@@ -142,7 +157,7 @@ export default new Router({
       name: '系统管理',
       component: Home,
       icon: 'fa fa-user-md',
-      index: '7',
+      index: '8',
       children: [
         {path: '/adminAdd', component: AdminAdd, name: '成员管理'},
         {path: '/postManager', component: PostManager, name: '岗位管理'},
@@ -156,7 +171,7 @@ export default new Router({
       name: '碰撞',
       component: Home,
       icon: 'fa fa-cloud',
-      index: '3',
+      index: '9',
       leaf: true,//只有一个节点
       children: [
         {path: '/collisionAnalysis', component: CollisionAnalysis, name: '碰撞分析', hidden: true},
@@ -171,7 +186,7 @@ export default new Router({
       name: '案件',
       component: Home,
       icon: 'fa fa-user-md',
-      index: '7',
+      index: '10',
       children: [
         {path: '/caseList', component: CaseList, name: '案件管理'},
         {path: '/caseDetail', component: CaseDetail, name: '案件详情'}
@@ -182,7 +197,7 @@ export default new Router({
       name: '伴随',
       component: Home,
       icon: 'fa fa-user-md',
-      index: '7',
+      index: '11',
       children: [
         {path: '/followList', component: FollowList, name: '伴随分析'},
         {path: '/addFollow', component: AddFollow, name: '新建伴随任务'},

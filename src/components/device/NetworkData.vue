@@ -234,14 +234,6 @@
           }
         }
       },
-      pageChange(index) {
-        this.query.page = index;
-        this.getNetworkData();
-      },
-      handleSizeChange(val) {
-        this.query.size = val;
-        this.getNetworkData();
-      },
       //格式化内容   有数据就展示，没有数据就显示--
       formatterAddress(row, column) {
         if (column.property === 'upTime') {

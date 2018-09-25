@@ -39,7 +39,7 @@
       </el-form>
       <h4 style="text-align: left">扫频数据</h4>
       <el-tabs v-model="activeItem" @tab-click="handleClick" style="margin-left: 20px">
-        <el-tab-pane :label="tab.name" v-for="tab in activeName" :key="tab.name" :name="tab.name"></el-tab-pane>
+        <el-tab-pane :label="tab.name" v-for="tab in activeName" :key="tab.type" :name="tab.type"></el-tab-pane>
       </el-tabs>
       <el-table :data="networkData" v-loading="listLoading" stripe style="margin-bottom: 30px">
         <el-table-column align="center" type="index" label="序号" width="65"></el-table-column>
@@ -77,8 +77,8 @@
         cells: [],
         gsmSniffer: {snifferMode: 0, selectFreqMode: 10, runTime: new Date(), snifferCycle: 1},
         listLoading: false,
-        activeItem: "移动(GSM)",
-        activeName: [{moduleID: -1, name: '移动(GSM)', type: 'GSM1'}, {moduleID: -1, name: '联通(GSM)', type: 'GSM2'}],
+        activeItem: "GSMCMCC",
+        activeName: [{name: '移动(GSM)', type: 'GSMCMCC'}, {name: '联通(GSM)', type: 'GSMCMUC'}],
         query: {page: 1, size: 10},
         count: 0,
         deviceId: this.$route.query.deviceId || '',
@@ -113,28 +113,6 @@
         this.networkData = [];
         this.getNetworkData();
       },
-      getModuleID(modeleName) {
-        for (let item of this.activeName) {
-          if (modeleName === item.name) {
-            return item.moduleID;
-          }
-        }
-      },
-      getNetwork(modeleName) {
-        for (let item of this.activeName) {
-          if (modeleName === item.name) {
-            return item.type;
-          }
-        }
-      },
-      pageChange(index) {
-        this.query.page = index;
-        this.getNetworkData();
-      },
-      handleSizeChange(val) {
-        this.query.size = val;
-        this.getNetworkData();
-      },
       //格式化内容   有数据就展示，没有数据就显示--
       formatterAddress(row, column) {
         if (column.property === 'upTime') {
@@ -154,8 +132,12 @@
             this.listLoading = false
           }, 500);
           if (data.code === '000000') {
-            if (data.data) {
-              this.networkData = data.data
+            if (data.data && data.data.length > 0) {
+              data.data.forEach((item) => {
+                if (this.activeItem == item.network) {
+                  this.networkData.push(item);
+                }
+              });
             } else {
               this.networkData = [];
             }
