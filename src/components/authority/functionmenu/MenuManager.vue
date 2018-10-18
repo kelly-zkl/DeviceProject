@@ -11,9 +11,10 @@
             <el-option v-for="item in menuTypes" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
-          <el-button type="primary" icon="search" style="margin-top: 10px" @click.stop="getMenus" size="medium">搜索
+          <el-button type="primary" icon="search" style="margin-top: 10px" @click.stop="query.page=1;getMenus()"
+                     size="medium">搜索
           </el-button>
-          <el-button style="margin-top: 10px" @click.stop="clearData" size="medium">清除</el-button>
+          <el-button style="margin-top: 10px" @click.stop="clearData()" size="medium">清除</el-button>
         </el-col>
         <el-col :span="4" align="right">
           <el-button type="primary" icon="el-icon-plus" @click="addMenu" style="margin-top: 10px"

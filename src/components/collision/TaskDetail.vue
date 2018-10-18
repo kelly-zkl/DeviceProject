@@ -68,7 +68,7 @@
             <el-input v-model="query.count2" type="number" size="medium" style="width: 80px" :maxlength=5></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="medium" @click="getData()">搜索</el-button>
+            <el-button type="primary" size="medium" @click="query.page=1;getData()">搜索</el-button>
           </el-form-item>
           <el-form-item>
             <el-button size="medium" @click="clearData()">重置</el-button>
@@ -136,7 +136,7 @@
             <el-input v-model="query.count2" type="number" size="medium" style="width: 80px" :maxlength=5></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="medium" @click="getData()">搜索</el-button>
+            <el-button type="primary" size="medium" @click="query.page=1;getData()">搜索</el-button>
           </el-form-item>
           <el-form-item>
             <el-button size="medium" @click="clearData()">重置</el-button>

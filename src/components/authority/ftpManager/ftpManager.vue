@@ -15,12 +15,12 @@
             </el-option>
           </el-select>
           <el-button type="primary" icon="search" style="margin-top: 10px"
-                     @click.stop="getFtpList" size="medium">搜索
+                     @click.stop="query.page=1;getFtpList()" size="medium">搜索
           </el-button>
-          <el-button style="margin-top: 10px" @click.stop="clearData" size="medium">清除</el-button>
+          <el-button style="margin-top: 10px" @click.stop="clearData()" size="medium">清除</el-button>
         </el-col>
         <el-col :span="4" align="right">
-          <el-button type="primary" icon="el-icon-plus" @click="addFtp" style="margin-top: 10px"
+          <el-button type="primary" icon="el-icon-plus" @click="addFtp()" style="margin-top: 10px"
                      v-show="getButtonVial('ftpConfig:add')" size="medium">添加FTP
           </el-button>
         </el-col>
@@ -297,7 +297,7 @@
         this.$post('/manager/group/query', {page: 1, size: 9999, userId: this.userId}).then((data) => {
           this.organizations = data.data.content;
         });
-      },
+      }
     },
     mounted() {
       this.getFtpList();

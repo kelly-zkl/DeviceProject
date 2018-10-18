@@ -115,7 +115,7 @@
   @media screen and (min-width: 320px) and (max-width: 799px) {
     .card-width {
       margin-top: 15px;
-      width: 98%
+      width: 100%
     }
 
     .card-margin {
@@ -126,7 +126,7 @@
   @media screen and (min-width: 800px) {
     .card-width {
       margin-top: 15px;
-      width: 90%
+      width: 100%
     }
 
     .card-margin {

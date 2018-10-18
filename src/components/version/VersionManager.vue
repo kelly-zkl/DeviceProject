@@ -20,7 +20,7 @@
                   </el-option>
                 </el-select>
                 <el-button type="primary" icon="search" style="width: 80px;margin-top: 10px"
-                           @click.stop="getVersionList()" size="medium">搜索
+                           @click.stop="query.page=1;getVersionList()" size="medium">搜索
                 </el-button>
                 <el-button style="width: 80px;margin-top: 10px" @click.stop="clearVersion()" size="medium">清除
                 </el-button>
@@ -78,7 +78,7 @@
                   </el-option>
                 </el-select>
                 <el-button type="primary" icon="search" style="width: 80px;;margin-top: 10px"
-                           @click.stop="getPatchList()" size="medium">搜索
+                           @click.stop="queryPatch.page=1;getPatchList()" size="medium">搜索
                 </el-button>
                 <el-button style="width: 80px;margin-top: 10px" @click.stop="clearPatch()" size="medium">清除</el-button>
               </el-col>
@@ -139,11 +139,11 @@
         <!--补丁详情-->
         <el-dialog title="补丁详情" :visible.sync="dialogPatch" :width="dialogWidth">
           <el-form ref="patchDetail" :model="patchDetail" label-width="100px" label-position="right">
-            <el-form-item label="安装包" style="text-align: left">{{patchDetail.pckname}} </el-form-item>
+            <el-form-item label="安装包" style="text-align: left">{{patchDetail.pckname}}</el-form-item>
             <el-form-item label="补丁名称" style="text-align: left">{{patchDetail.patchVersionNum}}</el-form-item>
-            <el-form-item label="适用版本" style="text-align: left">{{patchDetail.versionNum}} </el-form-item>
-            <el-form-item label="描述" style="text-align: left">{{patchDetail.versionDescription}} </el-form-item>
-            <el-form-item label="MD5" style="text-align: left">{{patchDetail.md5}} </el-form-item>
+            <el-form-item label="适用版本" style="text-align: left">{{patchDetail.versionNum}}</el-form-item>
+            <el-form-item label="描述" style="text-align: left">{{patchDetail.versionDescription}}</el-form-item>
+            <el-form-item label="MD5" style="text-align: left">{{patchDetail.md5}}</el-form-item>
           </el-form>
         </el-dialog>
         <!--上传安装包-->

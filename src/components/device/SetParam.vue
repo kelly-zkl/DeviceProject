@@ -79,11 +79,11 @@
                 <el-input v-model="opDeviceParameter.lac" :maxlength=4></el-input>
               </el-tooltip>
             </el-form-item>
-            <el-form-item label="tac" prop="tac"
+            <el-form-item label="tac"
                           v-show="(getActiveType() != 'GSM_1')|| deviceForm=='CON_OUTDOOR_MOCRO'">
               <el-tooltip placement="bottom">
                 <div slot="content">跟踪区域码 取值范围：[0001－FFFEH]，码组0000H和FFFFH不可以使用</div>
-                <el-input v-model="opDeviceParameter.tac" :maxlength=4></el-input>
+                <el-input v-model="opDeviceParameter.tac" :maxlength=4 readonly></el-input>
               </el-tooltip>
             </el-form-item>
             <el-form-item label="bandWidth" required v-show="deviceForm=='CON_OUTDOOR_MOCRO'" align="left">
@@ -529,8 +529,8 @@
                 {required: true, message: '请输入mcc', trigger: "blur"}, {validator: mccValid, trigger: "change,blur"}],
               pci: [
                 {required: true, message: '请输入pci', trigger: "blur"}, {validator: pciValid, trigger: "change,blur"}],
-              tac: [
-                {required: true, message: '请输入tac', trigger: "blur"}, {validator: hexValid, trigger: "change,blur"}],
+              // tac: [
+              //   {required: true, message: '请输入tac', trigger: "blur"}, {validator: hexValid, trigger: "change,blur"}],
               frameOffset: [{required: true, message: '请输入帧偏移', trigger: "blur"},
                 {validator: intVal, trigger: "change,blur"}],
               syncEarfcn: [{required: true, message: '请输入同步频点', trigger: "blur"},
@@ -544,7 +544,7 @@
             downFrequency: [
               {required: true, message: '请输入下行频点', trigger: "blur"}, {validator: numVal, trigger: "change,blur"}],
             pci: [{required: true, message: '请输入pci', trigger: "blur"}, {validator: pciValid, trigger: "change,blur"}],
-            tac: [{required: true, message: '请输入tac', trigger: "blur"}, {validator: hexValid, trigger: "change,blur"}],
+            // tac: [{required: true, message: '请输入tac', trigger: "blur"}, {validator: hexValid, trigger: "change,blur"}],
             tacPeriod: [{message: '请输入重复抓取时间', trigger: "blur"}, {validator: numVal, trigger: "change,blur"}]
           };
           if (this.getActiveType() === 'M') {
@@ -553,8 +553,8 @@
                 {validator: numVal, trigger: "change,blur"}],
               pci: [{required: true, message: '请输入pci', trigger: "blur"},
                 {validator: pciValid, trigger: "change,blur"}],
-              tac: [{required: true, message: '请输入tac', trigger: "blur"},
-                {validator: hexValid, trigger: "change,blur"}],
+              // tac: [{required: true, message: '请输入tac', trigger: "blur"},
+              //   {validator: hexValid, trigger: "change,blur"}],
               tacPeriod: [{message: '请输入重复抓取时间', trigger: "blur"},
                 {validator: numVal, trigger: "change,blur"}],
               frameOffset: [{required: true, message: '请输入帧偏移', trigger: "blur"},

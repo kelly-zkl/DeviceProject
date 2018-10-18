@@ -47,7 +47,8 @@
               <el-option v-for="item in deviceTypes" :key="item.code" :label="item.name" :value="item.code">
               </el-option>
             </el-select>
-            <el-button type="primary" icon="search" style="margin-top: 10px" @click.stop="getData()">搜索</el-button>
+            <el-button type="primary" icon="search" style="margin-top: 10px" @click.stop="query.page=1;getData()">搜索
+            </el-button>
             <el-button style="margin-top: 10px" @click.stop="clearData()">清除</el-button>
           </el-col>
         </el-row>

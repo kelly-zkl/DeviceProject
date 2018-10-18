@@ -52,6 +52,7 @@
       },
       //状态改变
       changeStatus(val) {
+        this.query.page = 1;
         this.getTask();
       },
       pageChange(index) {

@@ -113,8 +113,6 @@
         activeName: [{moduleID: 1, name: '移动2G(GSM 0)', type: 'GSM1'}, {moduleID: 2, name: '联通2G(GSM 1)', type: 'GSM2'},
           {moduleID: 3, name: '联通4G(FDD 0)', type: 'FDD0'}, {moduleID: 4, name: '电信4G(FDD 1)', type: 'FDD1'},
           {moduleID: 5, name: '移动4G(TDD 0)', type: 'TDD0'}, {moduleID: 6, name: '移动4G(TDD 1)', type: 'TDD1'}],
-        query: {page: 1, size: 10},
-        count: 0,
         deviceId: this.$route.query.deviceId || '',
         defaultProps: [{value: 'bcchNumber', name: '频点'}, {value: 'c1', name: 'c1'},
           {value: 'c2', name: 'c2'}, {value: 'rssi', name: 'rssi'}, {value: 'upTime', name: '上报时间'}],

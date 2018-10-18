@@ -34,7 +34,8 @@
             <!--v-for="item in online" :key="item.value" :label="item.label" :value="item.value">-->
             <!--</el-option>-->
             <!--</el-select>-->
-            <el-button type="primary" style="margin-top: 10px" @click.stop="getData()" size="medium">搜索</el-button>
+            <el-button type="primary" style="margin-top: 10px" @click.stop="query.page=1;getData()" size="medium">搜索
+            </el-button>
             <el-button style="margin-top: 10px" @click.stop="clearData()" size="medium">清除</el-button>
           </el-col>
           <el-col :span="4" align="right">

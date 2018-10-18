@@ -79,8 +79,6 @@
         listLoading: false,
         activeItem: "GSMCMCC",
         activeName: [{name: '移动(GSM)', type: 'GSMCMCC'}, {name: '联通(GSM)', type: 'GSMCMUC'}],
-        query: {page: 1, size: 10},
-        count: 0,
         deviceId: this.$route.query.deviceId || '',
         autoBccModes: [{value: 10, label: '手动配置'}, {value: 2, label: '周围宏站选次弱'}, {value: 8, label: '宏站邻区选次弱'}],
         snifferModes: [{value: 0, label: '手动'}, {value: 1, label: '自动'}],

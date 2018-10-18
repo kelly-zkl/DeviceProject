@@ -13,7 +13,7 @@
               </el-cascader>
             </el-form-item>
             <el-form-item style="margin-bottom: 10px">
-              <el-button type="primary" @click.stop="getData()" size="medium">搜索</el-button>
+              <el-button type="primary" @click.stop="query.page=1;getData()" size="medium">搜索</el-button>
             </el-form-item>
             <el-form-item style="margin-bottom: 10px">
               <el-button @click.stop="clearData()" size="medium">清除</el-button>
@@ -40,8 +40,8 @@
                          max-width="250" :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" label="相机名称" prop="name" min-width="150"
                          max-width="250" :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" label="相机状态" prop="status" min-width="150"
-                         max-width="250" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="相机状态" prop="status" min-width="100"
+                         max-width="150" :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" label="安装地区" prop="areaCode" min-width="150"
                          max-width="250" :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" label="详细地址" prop="detailAddress" min-width="150"

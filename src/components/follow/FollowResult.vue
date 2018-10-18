@@ -54,7 +54,7 @@
                       :maxlength=5></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="medium" @click="getResult()">搜索</el-button>
+            <el-button type="primary" size="medium" @click="queryResult.page=1;getResult()">搜索</el-button>
           </el-form-item>
           <el-form-item>
             <el-button size="medium" @click="clearData()">重置</el-button>
@@ -107,7 +107,7 @@
                       :maxlength=20></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="medium" @click="getList()">搜索</el-button>
+            <el-button type="primary" size="medium" @click="queryRecord.page=1;getList()">搜索</el-button>
           </el-form-item>
           <el-form-item>
             <el-button size="medium" @click="clearData()">重置</el-button>

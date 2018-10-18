@@ -5,7 +5,8 @@
         <el-col :span="18" align="left">
           <el-input placeholder="终端imsi" v-model="query.imsi" :maxlength="30" size="medium"
                     style="margin-top: 10px;width: 250px;margin-right: 10px"></el-input>
-          <el-button type="primary" icon="search" style="margin-top: 10px" @click="getData()" size="medium">搜索
+          <el-button type="primary" icon="search" style="margin-top: 10px" @click="query.page=1;getData()"
+                     size="medium">搜索
           </el-button>
           <el-button style="margin-top: 10px" @click="clearData()" size="medium">清除
           </el-button>

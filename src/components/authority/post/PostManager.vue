@@ -11,13 +11,13 @@
             <el-option v-for="item in postTypes" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
-          <el-button type="primary" icon="search" style="margin-top: 10px"
-                     @click.stop="getPosts" size="medium">搜索
+          <el-button type="primary" icon="search" style="margin-top: 10px" size="medium"
+                     @click.stop="query.page=1;getPosts()">搜索
           </el-button>
-          <el-button style="margin-top: 10px" @click.stop="clearData" size="medium">清除</el-button>
+          <el-button style="margin-top: 10px" @click.stop="clearData()" size="medium">清除</el-button>
         </el-col>
         <el-col :span="4" align="right">
-          <el-button type="primary" icon="el-icon-plus" @click="addPost" style="margin-top: 10px"
+          <el-button type="primary" icon="el-icon-plus" @click="addPost()" style="margin-top: 10px"
                      v-show="getButtonVial('manager:role:create')" size="medium">创建岗位
           </el-button>
         </el-col>

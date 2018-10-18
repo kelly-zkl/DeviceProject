@@ -27,7 +27,7 @@
                   </el-select>
                 </el-tooltip>
                 <el-button type="primary" icon="search" style="margin-top: 10px;margin-left: 10px"
-                           @click="getData()" size="medium">搜索
+                           @click="query.page=1;getData()" size="medium">搜索
                 </el-button>
                 <el-button style="margin-top: 10px" @click="clearData()" size="medium">清除</el-button>
               </el-col>
@@ -125,7 +125,7 @@
                   </el-select>
                 </el-tooltip>
                 <el-button type="primary" icon="search" style="margin-left: 10px;margin-top: 10px"
-                           @click="getData()" size="medium">搜索
+                           @click="query.page=1;getData()" size="medium">搜索
                 </el-button>
                 <el-button style="margin-top: 10px" @click="clearData()" size="medium">清除</el-button>
               </el-col>

@@ -104,7 +104,7 @@
               <el-radio-button :label="1">GPS同步</el-radio-button>
               <el-radio-button :label="2">空口同步</el-radio-button>
             </el-radio-group>
-            <el-input v-model.number="gpsParam.gpsOffset" placeholder="请输入帧头偏移" :maxlength="20"
+            <el-input v-model="gpsParam.gpsOffset" placeholder="请输入帧偏移" :maxlength="20"
                       style="width: 200px" v-show="gpsParam.timingMode==1"></el-input>
             <el-button @click="saveGps()" size="medium" type="primary" style="margin-left: 10px"
                        v-show="getButtonVial('set:sendGPSParam')">设置
@@ -239,7 +239,7 @@
   import json from '../../assets/city.json';
   import MapView from '../device/map';
   import axios from "axios";
-  import {ipValid, numValid, mobileValidator, noSValidator} from '../../api'
+  import {ipValid, numValid, mobileValidator, noSValidator, intValid} from '../../api'
 
   export default {
     props: ['deviceId'],
@@ -704,9 +704,15 @@
         })
       },
       saveGps() {
-        if (this.gpsParam.timingMode === 1 && this.gpsParam.gpsOffset.length == 0) {
-          this.$message.error('请输入帧头偏移');
-          return;
+        if (this.gpsParam.timingMode === 1) {
+          if (this.gpsParam.gpsOffset.length == 0) {
+            this.$message.error('请输入帧偏移');
+            return;
+          }
+          if (!intValid(this.gpsParam.gpsOffset)) {
+            this.$message.error('请输入正确的帧偏移');
+            return;
+          }
         }
         this.$post('/set/sendGPSParam/' + this.deviceId1 + '/' + this.deviceMonitor.deviceForm, this.gpsParam, "设置命令下发成功").then((data) => {
           if (data.code === '000000') {

@@ -30,7 +30,7 @@
       </h4>
       <el-row style="margin:0 0 10px 20px">
         <el-col :span="24" align="left">
-          <el-input placeholder="终端imsi" v-model="query.imsi" :maxlength="30" size="medium"
+          <el-input placeholder="IMSI" v-model="query.imsi" :maxlength="30" size="medium"
                     style="width: 160px;margin-right: 10px;margin-top: 10px"></el-input>
           <el-input placeholder="网络类型" v-model="query.netType" :maxlength="10" size="medium"
                     style="width: 160px;margin-right: 10px;margin-top: 10px"></el-input>
@@ -52,15 +52,15 @@
       </el-row>
       <el-table :data="list10" class="center-block" stripe>
         <el-table-column align="center" type="index" label="序号" width="65"></el-table-column>
-        <el-table-column align="left" prop="deviceId" label="设备ID" min-width="100" max-width="200"
+        <el-table-column align="left" prop="deviceId" label="设备ID" min-width="150" max-width="250"
                          :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" prop="imei" label="IMEI" min-width="150" max-width="200"
+        <el-table-column align="left" prop="imei" label="IMEI" min-width="100" max-width="200"
                          :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" prop="imsi" label="IMSI" min-width="150" max-width="200"
+        <el-table-column align="left" prop="imsi" label="IMSI" min-width="150" max-width="250"
                          :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" prop="tmsi" label="TMSI" min-width="150" max-width="200"
+        <el-table-column align="left" prop="tmsi" label="TMSI" min-width="100" max-width="200"
                          :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" prop="uptime" label="抓取时间" width="170"
+        <el-table-column align="left" prop="uptime" label="抓取时间" min-width="170" max-width="250"
                          :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" prop="isp" label="运营商" max-width="150" min-width="100"
                          :formatter="formatterAddress"></el-table-column>
@@ -101,7 +101,8 @@
           size: 100, deviceId: this.deviceId, groupId: this.groupId, isp: '',
           netType: '', imsi: ''
         },
-        cTime: '',
+        cTime: [new Date(($.Data.formatDate(new Date(), 'yyyy-MM-dd') + " 00:00:00").replace(/-/g, '/')).getTime(),
+          new Date(($.Data.formatDate(new Date(), 'yyyy-MM-dd') + " 23:59:59").replace(/-/g, '/')).getTime()],
         ccPeriod: 10,
         terminalPA: 20,
         intervalid: null,
@@ -178,8 +179,8 @@
         this.query = {
           size: 100, deviceId: this.deviceId, groupId: this.groupId, isp: '', netType: '', imsi: ''
         };
-        this.cTime = '';
-        this.cTime = '';
+        this.cTime = [new Date(($.Data.formatDate(new Date(), 'yyyy-MM-dd') + " 00:00:00").replace(/-/g, '/')).getTime(),
+          new Date(($.Data.formatDate(new Date(), 'yyyy-MM-dd') + " 23:59:59").replace(/-/g, '/')).getTime()];
         this.isSearch = true;
         this.getData();
         this.getCouple();

@@ -7,12 +7,12 @@
           <el-input placeholder="组织名称" v-model="query.groupName" :maxlength="20" size="medium"
                     style="width: 250px;margin-right: 10px;margin-top: 10px"></el-input>
           <el-button type="primary" icon="search" style="margin-top: 10px"
-                     @click.stop="getOrganizations" size="medium">搜索
+                     @click.stop="query.page=1;getOrganizations()" size="medium">搜索
           </el-button>
-          <el-button style="margin-top: 10px" @click.stop="clearData" size="medium">清除</el-button>
+          <el-button style="margin-top: 10px" @click.stop="clearData()" size="medium">清除</el-button>
         </el-col>
         <el-col :span="4" align="right">
-          <el-button type="primary" icon="el-icon-plus" @click="addOrganization" style="margin-top: 10px"
+          <el-button type="primary" icon="el-icon-plus" @click="addOrganization()" style="margin-top: 10px"
                      v-show="getButtonVial('manager:group:create')" size="medium">创建组织
           </el-button>
         </el-col>

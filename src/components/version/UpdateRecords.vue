@@ -23,7 +23,7 @@
                   </el-option>
                 </el-select>
                 <el-button type="primary" icon="search" style="margin-top: 10px"
-                           @click.stop="getUpdateData()" size="medium">搜索
+                           @click.stop="query.page=1;getUpdateData()" size="medium">搜索
                 </el-button>
                 <el-button style="margin-top: 10px" @click.stop="clearData()" size="medium">清除</el-button>
               </el-col>

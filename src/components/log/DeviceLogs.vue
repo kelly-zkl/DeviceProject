@@ -22,7 +22,8 @@
                           style="width: 350px;margin-right: 10px;margin-top: 10px"
                           :picker-options="pickerBeginDate">
           </el-date-picker>
-          <el-button type="primary" icon="search" style="margin-top: 10px" @click.stop="getLogList()" size="medium">搜索
+          <el-button type="primary" icon="search" style="margin-top: 10px" @click.stop="query.page=1;getLogList()"
+                     size="medium">搜索
           </el-button>
           <el-button style="margin-top: 10px" @click.stop="clearData()" size="medium">清除
           </el-button>
