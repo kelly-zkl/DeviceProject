@@ -47,7 +47,7 @@ Vue.prototype.$User_Url = localStorage.getItem("UserUrl");
 
 // axios.defaults.baseURL = "http://119.147.36.2:58080/CriminalCode-admin-web/";
 // axios.defaults.baseURL = "http://120.77.155.12:49191/CriminalCode-admin-web";
-// axios.defaults.baseURL = "http://192.168.31.242:19191/CriminalCode-admin-web";
+// axios.defaults.baseURL = "http://192.168.31.244:19191/CriminalCode-admin-web";
 // axios.defaults.baseURL = "http://192.168.31.30:8080/CriminalCode-admin-web";
 // axios.defaults.baseURL = "http://119.23.232.135:19191/CriminalCode-admin-web";
 // axios.defaults.baseURL = "http://211.95.45.250:29090/CriminalCode-admin-web";
@@ -55,7 +55,7 @@ Vue.prototype.$User_Url = localStorage.getItem("UserUrl");
 
 // Vue.prototype.$User_Url = "http://120.77.155.12:49191/manager-api";
 // Vue.prototype.$User_Url = "http://192.168.31.58:8090/manager-api";
-// Vue.prototype.$User_Url = "http://192.168.31.242:19191/manager-api";
+// Vue.prototype.$User_Url = "http://192.168.31.244:19191/manager-api";
 // Vue.prototype.$User_Url = "http://119.23.232.135:19191/manager-api";
 // Vue.prototype.$User_Url = "http://192.168.31.30:8080/manager-api";
 
@@ -75,7 +75,7 @@ Vue.prototype.$post = function (path, param, successMsg, failMsg, isLogin) {
     }
   }
 
-  if (path.indexOf('/manager/') === 0) {
+  if (path.indexOf('/manager/') === 0 || path.indexOf('/workflow/') === 0) {
     path = Vue.prototype.$User_Url + path;
   }
 
@@ -117,7 +117,8 @@ router.beforeEach((to, from, next) => {
 
   if (!!to.query && to.query.type === "face") {//人脸识别项目调用此项目的页面
     if ((to.path === '/deviceList' || to.path === '/terminalList' || to.path === '/collisionAnalysis' ||
-      to.path === '/caseList' || to.path === '/followList')) {//只开放设备列表、imsi列表、碰撞、案件、伴随 5个页面
+      to.path === '/caseList' || to.path === '/followList' || to.path === '/myApply' || to.path === '/myApproval'
+      || to.path === '/myReview' || to.path === '/imsiConver')) {//只开放设备列表、imsi列表、碰撞、案件、伴随、翻码模块 5个页面
       if (!user) {
         let user = {groupId: "1", userId: "5a44928633bbd029002fc3fa", account: "superAdmin"};
         sessionStorage.setItem("user", JSON.stringify(user));

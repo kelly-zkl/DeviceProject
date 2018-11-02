@@ -147,7 +147,8 @@
           $route.path !='/adminAdd' && $route.path !='/postManager'&& $route.path !='/menuManager' &&
           $route.path !='/organizationManager' && $route.path !='/macList' && $route.path !='/deviceOverview' &&
           $route.path !='/ftpManager' && $route.path !='/collisionAnalysis' && $route.path !='/caseList'&&
-          $route.path !='/followList' && $route.path !='/deviceLogs'">
+          $route.path !='/followList' && $route.path !='/deviceLogs'&& $route.path != '/myApply'&&
+          $route.path != '/myApproval' && $route.path != '/myReview' && $route.path != '/imsiConver'">
             <el-button type="text" style="padding: 0;margin-right: 10px" @click="$router.go(-1)">返回上一级</el-button>
             <div class="bar">
               <el-breadcrumb separator-class="el-icon-arrow-right">

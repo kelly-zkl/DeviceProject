@@ -63,6 +63,14 @@ import FollowResult from "../components/follow/FollowResult.vue";
 import IMSIDetail from "../components/follow/IMSIDetail.vue";
 import ImageDetail from "../components/follow/ImageDetail.vue";
 
+//翻码
+import ApprovalApply from "../components/approval/ApprovalApply.vue";
+import ApprovalDetail from "../components/approval/ApprovalDetail.vue";
+import ImsiConver from "../components/approval/ImsiConver.vue";
+import MyApply from "../components/approval/MyApply.vue";
+import MyApproval from "../components/approval/MyApproval.vue";
+import MyReview from "../components/approval/MyReview.vue";
+
 Vue.use(Router);
 
 export default new Router({
@@ -204,6 +212,21 @@ export default new Router({
         {path: '/followResult', component: FollowResult, name: '分析结果'},
         {path: '/iMSIDetail', component: IMSIDetail, name: 'IMSI详情'},
         {path: '/imageDetail', component: ImageDetail, name: '图像详情'}
+      ]
+    },
+    {
+      path: '/myApply',
+      name: '翻码',
+      component: Home,
+      icon: 'fa fa-briefcase',
+      index: '12',
+      children: [
+        {path: '/myApply', component: MyApply, name: '我申请的'},
+        {path: '/myApproval', component: MyApproval, name: '我审批的'},
+        {path: '/myReview', component: MyReview, name: '我审阅的'},
+        {path: '/imsiConver', component: ImsiConver, name: '翻码返回'},
+        {path: '/approvalApply', component: ApprovalApply, name: '发起申请'},
+        {path: '/approvalDetail', component: ApprovalDetail, name: '详情'}
       ]
     },
     {
