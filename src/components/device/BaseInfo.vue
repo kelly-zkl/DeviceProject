@@ -129,38 +129,6 @@
                   </el-button>
                 </el-col>
               </el-row>
-              <!--<span v-show="versions.cliVersion">-->
-              <!--{{'cliVersion：' + versions.cliVersion}}</span>-->
-              <!--<br v-show="versions.cliVersion"/>-->
-              <!--<span v-show="versions.ltedetectorVersion">-->
-              <!--{{'ltedetectorVersion：' + versions.ltedetectorVersion}}</span>-->
-              <!--<br v-show="versions.ltedetectorVersion"/>-->
-              <!--<span v-show="versions.postdemoVersion">-->
-              <!--{{'postdemoVersion：' + versions.postdemoVersion}}</span>-->
-              <!--<br v-show="versions.postdemoVersion"/>-->
-              <!--<span v-show="versions.ifAppVersion">-->
-              <!--{{'ifAppVersion：' + versions.ifAppVersion}}</span>-->
-              <!--<br v-show="versions.ifAppVersion"/>-->
-              <!--<span v-show="versions.fddLtedemoVersion">-->
-              <!--{{'fddLtedemoVersion：' + versions.fddLtedemoVersion}}</span>-->
-              <!--<br v-show="versions.fddLtedemoVersion"/>-->
-              <!--<span v-show="versions.fddLtecapVersion">-->
-              <!--{{'fddLtecapVersion：' + versions.fddLtecapVersion}}</span>-->
-              <!--<br v-show="versions.fddLtecapVersion"/>-->
-              <!--<span v-show="versions.fddEnodebVersion">-->
-              <!--{{'fddEnodebVersion：' + versions.fddEnodebVersion}}</span>-->
-              <!--<br v-show="versions.fddEnodebVersion"/>-->
-              <!--<span v-show="versions.tddLtedemoVersion">-->
-              <!--{{'tddLtedemoVersion：' + versions.tddLtedemoVersion}}</span>-->
-              <!--<br v-show="versions.tddLtedemoVersion"/>-->
-              <!--<span v-show="versions.tddLtecapVersion">-->
-              <!--{{'tddLtecapVersion：' + versions.tddLtecapVersion}}</span>-->
-              <!--<br v-show="versions.tddLtecapVersion"/>-->
-              <!--<span v-show="versions.tddEnodebVersion">-->
-              <!--{{'tddEnodebVersion：' + versions.tddEnodebVersion}}</span>-->
-              <!--<br v-show="versions.tddEnodebVersion"/>-->
-              <!--<span v-show="versions.gsmDemoVersion">-->
-              <!--{{'gsmDemoVersion：' + versions.gsmDemoVersion}}</span>-->
               <span
                 v-show="!versions.cliVersion && !versions.ltedetectorVersion && !versions.postdemoVersion &&
                 !versions.ifAppVersion && !versions.fddLtedemoVersion && !versions.fddLtecapVersion &&

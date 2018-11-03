@@ -47,7 +47,7 @@ Vue.prototype.$User_Url = localStorage.getItem("UserUrl");
 
 // axios.defaults.baseURL = "http://119.147.36.2:58080/CriminalCode-admin-web/";
 // axios.defaults.baseURL = "http://120.77.155.12:49191/CriminalCode-admin-web";
-// axios.defaults.baseURL = "http://192.168.31.244:19191/CriminalCode-admin-web";
+axios.defaults.baseURL = "http://192.168.31.101:19191/CriminalCode-admin-web";
 // axios.defaults.baseURL = "http://192.168.31.30:8080/CriminalCode-admin-web";
 // axios.defaults.baseURL = "http://119.23.232.135:19191/CriminalCode-admin-web";
 // axios.defaults.baseURL = "http://211.95.45.250:29090/CriminalCode-admin-web";
@@ -55,7 +55,7 @@ Vue.prototype.$User_Url = localStorage.getItem("UserUrl");
 
 // Vue.prototype.$User_Url = "http://120.77.155.12:49191/manager-api";
 // Vue.prototype.$User_Url = "http://192.168.31.58:8090/manager-api";
-// Vue.prototype.$User_Url = "http://192.168.31.244:19191/manager-api";
+Vue.prototype.$User_Url = "http://192.168.31.101:19191/manager-api";
 // Vue.prototype.$User_Url = "http://119.23.232.135:19191/manager-api";
 // Vue.prototype.$User_Url = "http://192.168.31.30:8080/manager-api";
 

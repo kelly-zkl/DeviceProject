@@ -17,9 +17,9 @@
                 </el-select>
               </el-tooltip>
             </el-form-item>
-            <el-form-item label="上行频点" required v-show="deviceForm=='CON_OUTDOOR_MOCRO'">
-              <el-input v-model="opDeviceParameter.upFrequency" readonly></el-input>
-            </el-form-item>
+            <!--<el-form-item label="上行频点" required v-show="deviceForm=='CON_OUTDOOR_MOCRO'">-->
+            <!--<el-input v-model="opDeviceParameter.upFrequency" readonly></el-input>-->
+            <!--</el-form-item>-->
             <el-form-item label="下行频点" v-show="deviceForm=='CON_OUTDOOR_MOCRO'" prop="downFrequency">
               <el-input v-model="opDeviceParameter.downFrequency" @change="changeDown"></el-input>
             </el-form-item>
@@ -197,7 +197,7 @@
         </el-col>
         <el-col :span="3" align="left">
           <el-switch v-model="hopParam.hopFrequencySwitch" align="right" :active-value=1
-                     :inactive-value=0></el-switch>
+                     :inactive-value=0 active-color="#409EFF" inactive-color="#C1C1C1"></el-switch>
         </el-col>
         <el-col :span="8" align="left" :offset="1" v-show="hopParam.hopFrequencySwitch == 1">
           <span style="font-size: 14px;color: #333;margin-right: 20px">跳频周期</span>
@@ -213,11 +213,11 @@
                style="color: #549FF6;font-size: 20px;text-align: center"></i>
           </el-form-item>
           <el-form-item label="上行频点" style="margin: 0">
-            <el-input v-model.number="tab.upFrequency" :maxlength=10 readonly></el-input>
+            <el-input v-model.number="tab.upFrequency" :maxlength=10 readonly style="width: 100px"></el-input>
           </el-form-item>
           <el-form-item label="下行频点" style="margin: 0">
             <el-input v-model.number="tab.downFrequency" :maxlength=10 @change="changeTDown($event,indx)"
-                      @blur="changeTDown($event,indx)"></el-input>
+                      @blur="changeTDown($event,indx)" style="width: 100px"></el-input>
           </el-form-item>
           <el-form-item label="plmn" style="margin: 0">
             <el-radio-group v-model="tab.plmn">
@@ -226,7 +226,8 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="帧偏移" style="margin: 0" v-show="getActiveType() == 'M'">
-            <el-input v-model.number="tab.frameOffset" :maxlength=10 @change="changeOffset"></el-input>
+            <el-input v-model.number="tab.frameOffset" :maxlength=10 @change="changeOffset"
+                      style="width: 100px"></el-input>
           </el-form-item>
         </el-form>
       </div>

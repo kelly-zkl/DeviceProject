@@ -81,7 +81,7 @@
           </el-tabs>
           <el-row style="margin-top: 20px">
             <el-col :span="6">
-              <el-form-item label="PA温度" style="text-align: left"><span
+              <el-form-item label="基带板温度" style="text-align: left"><span
                 v-bind:class="subModuleStatus.patemp > 80 ? 'text-red' : subModuleStatus.patemp > 50 ? 'text-yellow' :'text-green'">
                 {{subModuleStatus.patemp != null ? subModuleStatus.patemp : '--'}}°C</span>
               </el-form-item>

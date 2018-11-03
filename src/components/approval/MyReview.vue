@@ -49,24 +49,24 @@
       <el-table :data="imsiList" v-loading="listLoading" class="center-block" stripe @selection-change="selsChange">
         <el-table-column type="selection" width="45" align="left"></el-table-column>
         <el-table-column align="center" type="index" label="序号" width="65"></el-table-column>
-        <el-table-column align="left" label="编号" prop="recordNo" min-width="230"
-                         max-width="250" :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" label="业务类型" prop="followType" width="120"
-                         :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" label="勤务等级" prop="staffLevel" width="110"
-                         :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="编号" prop="recordNo" min-width="150"
+                         max-width="200" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="业务类型" prop="followType" min-width="120"
+                         max-width="200" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="勤务等级" prop="staffLevel" min-width="110"
+                         max-width="200" :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" label="申请人" prop="creatorName" min-width="150"
-                         max-width="250" :formatter="formatterAddress"></el-table-column>
+                         max-width="200" :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" label="申请人所属组织" prop="creatorGroupName" min-width="150"
-                         max-width="250" :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" label="申请时间" prop="createTime" width="170"
-                         :formatter="formatterAddress"></el-table-column>
+                         max-width="200" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="申请时间" prop="createTime" min-width="170"
+                         max-width="200" :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" label="当前节点" prop="currentNode" min-width="150"
-                         max-width="250" :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" label="当前节点负责人" prop="currentNodeOperatorName" width="170"
-                         :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" label="状态" prop="status" width="120"
-                         :formatter="formatterAddress"></el-table-column>
+                         max-width="200" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="当前节点负责人" prop="currentNodeOperatorName" min-width="150"
+                         max-width="200" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="状态" prop="status" min-width="120"
+                         max-width="200" :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" label="操作" width="160" fixed="right">
           <template slot-scope="scope">
             <el-button type="text" @click="sels = [];sels.push(scope.row);updateStatus()"
@@ -148,22 +148,14 @@
       },
       //发起申请
       addApply() {
-        sessionStorage.setItem("activeName", this.activeItem);
-        sessionStorage.setItem("cTime", JSON.stringify(this.qTime));
-        sessionStorage.setItem("query", JSON.stringify(this.query));
         this.$router.push('/approvalApply');
       },
       //翻码详情页
       gotoDetail(row) {
-        sessionStorage.setItem("activeName", this.activeItem);
-        sessionStorage.setItem("cTime", JSON.stringify(this.qTime));
-        sessionStorage.setItem("query", JSON.stringify(this.query));
         if (this.activeItem === 'UNREAD') {
-          let routeData = this.$router.resolve({path: '/approvalDetail', query: {type: 3, recordId: row.recordId}});
-          window.open(routeData.href, '_blank');
+          this.$router.push({path: '/approvalDetail', query: {type: 3, recordId: row.recordId}});
         } else {
-          let routeData = this.$router.resolve({path: '/approvalDetail', query: {type: 0, recordId: row.recordId}});
-          window.open(routeData.href, '_blank');
+          this.$router.push({path: '/approvalDetail', query: {type: 0, recordId: row.recordId}});
         }
       },
       handleSizeChange(val) {
@@ -217,18 +209,6 @@
       }
     },
     mounted() {
-      let bol = JSON.parse(sessionStorage.getItem("query"));
-      let tab = sessionStorage.getItem("activeName");
-      let time1 = JSON.parse(sessionStorage.getItem("cTime"));
-      if (tab) {
-        this.activeItem = tab;
-      }
-      if (bol) {
-        this.query = JSON.parse(sessionStorage.getItem("query"));
-      }
-      if (time1) {
-        this.qTime = time1;
-      }
       this.getData();
     },
     components: {
