@@ -306,7 +306,10 @@
         sessionStorage.setItem("query", JSON.stringify(this.query));
         this.$router.push({
           path: 'deviceSet',
-          query: {deviceId: device.deviceId, deviceForm: device.deviceForm, groupId: device.groupId}
+          query: {
+            deviceId: device.deviceId, deviceForm: device.deviceForm,
+            groupId: device.groupId, deviceType: device.deviceType
+          }
         });
       },
       //获取设备类型和形态

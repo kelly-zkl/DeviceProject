@@ -5,7 +5,7 @@
     </h4>
     <!--<headerTitle></headerTitle>-->
     <el-row style="margin-top: 20px;margin-bottom: 10px">
-      <el-col :span="24" align="left">
+      <el-col :span="20" align="left">
         <el-input placeholder="设备ID" v-model="query.deviceId" :maxlength="30"
                   style="width: 180px;margin-right: 10px;margin-top: 10px" size="medium"></el-input>
         <el-input placeholder="MAC" v-model="query.mac" :maxlength="30"
@@ -30,6 +30,10 @@
                    @click.stop="isSearch = true;getMacList();getCouple()" size="medium">搜索
         </el-button>
         <el-button style="margin-top: 10px" @click.stop="clearData()" size="medium">清除</el-button>
+      </el-col>
+      <el-col :span="4" style="text-align: right" align="right">
+        <el-button type="primary" size="medium" @click="exportData()" v-show="getButtonVial('wifi:export')">导出数据
+        </el-button>
       </el-col>
     </el-row>
     <el-table :data="list10" class="center-block" v-loading="listLoading" stripe>
@@ -61,6 +65,8 @@
   import headerTitle from "../publicComponents/headerTitle.vue";
   import {noSValidator, noValidator, macVal, isMac} from "../../api";
 
+  var fileDownload = require('js-file-download');
+
   export default {
     data() {
       return {
@@ -91,6 +97,24 @@
       }
     },
     methods: {
+      getButtonVial(msg) {
+        return $.Button.buttonValidator(msg);
+      },
+      //导出数据
+      exportData() {
+        var param = Object.assign({}, this.query);
+        delete param['size'];
+        if (this.cTime) {//时间戳的毫秒转化成秒
+          param.startUploadTime = this.cTime[0] / 1000;
+          param.endUploadTime = this.cTime[1] / 1000;
+        }
+        this.axios.post('/wifi/export', param, {responseType: 'arraybuffer'}).then((res) => {
+          let fileStr = res.headers['content-disposition'].split(";")[1].split("filename=")[1];
+          let fileName = decodeURIComponent(fileStr);
+          fileDownload(res.data, fileName);
+        }).catch(function (res) {
+        });
+      },
       //获取mac采集的列表
       getMacList() {
         if (this.query.deviceId) {
@@ -182,7 +206,7 @@
           size: 100, deviceId: '', mac: '', bssid: '', essid: '',
           groupId: JSON.parse(sessionStorage.getItem("user")).groupId
         };
-        this.cTime= [new Date(($.Data.formatDate(new Date(), 'yyyy-MM-dd') + " 00:00:00").replace(/-/g, '/')).getTime(),
+        this.cTime = [new Date(($.Data.formatDate(new Date(), 'yyyy-MM-dd') + " 00:00:00").replace(/-/g, '/')).getTime(),
           new Date(($.Data.formatDate(new Date(), 'yyyy-MM-dd') + " 23:59:59").replace(/-/g, '/')).getTime()];
         this.getMacList();
         this.getCouple();

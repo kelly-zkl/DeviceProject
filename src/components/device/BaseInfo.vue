@@ -98,18 +98,6 @@
                        v-show="deviceMonitor.pubkey" v-clipboard:error="onError" type="primary" plain>复制
             </el-button>
           </el-form-item>
-          <el-form-item label="GPS" v-if="deviceMonitor.deviceForm==='CON_OUTDOOR_MOCRO'"
-                        style="text-align: left;margin: 0">
-            <el-radio-group size="medium" v-model="gpsParam.timingMode" style="margin-right: 10px">
-              <el-radio-button :label="1">GPS同步</el-radio-button>
-              <el-radio-button :label="2">空口同步</el-radio-button>
-            </el-radio-group>
-            <el-input v-model="gpsParam.gpsOffset" placeholder="请输入帧偏移" :maxlength="20"
-                      style="width: 200px" v-show="gpsParam.timingMode==1"></el-input>
-            <el-button @click="saveGps()" size="medium" type="primary" style="margin-left: 10px"
-                       v-show="getButtonVial('set:sendGPSParam')">设置
-            </el-button>
-          </el-form-item>
           <el-form-item label="重置激活状态" v-show="getButtonVial('device:set:unactive')" style="text-align: left;margin: 0">
             <el-button @click="unActive()" size="medium" type="primary">重置</el-button>
           </el-form-item>
@@ -138,10 +126,10 @@
             </div>
             <div v-else>
               <span v-show="versions.deviceVersion">
-                {{'deviceVersion：' + versions.deviceVersion}}</span>
+                {{'固件版本：' + versions.deviceVersion}}</span>
               <br v-show="versions.deviceVersion"/>
               <span v-show="versions.softVersion">
-                {{'softVersion：' + versions.softVersion}}</span>
+                {{'软件版本：' + versions.softVersion}}</span>
               <span v-show="!versions.deviceVersion && !versions.softVersion">未上报</span>
             </div>
           </el-form-item>
@@ -275,7 +263,6 @@
         versions: {},
         placeCode: '',
         numberCode: '',
-        gpsParam: {timingMode: 2, gpsOffset: 0},
         serviceTypes: [{value: '0', label: '网吧'}, {value: '1', label: '旅店宾馆类（住宿服务场所）'},
           {value: '2', label: '图书馆阅览室'}, {value: '3', label: '电脑培训中心类'}, {value: '4', label: '娱乐场所类'},
           {value: '5', label: '交通枢纽'}, {value: '6', label: '公共交通工具'}, {value: '7', label: '餐饮服务场所'},
@@ -660,37 +647,9 @@
           this.getBaseInfo();
         }).catch((err) => {
         });
-      },
-      //获取载波参数
-      getParam() {
-        this.$post('device/get/deviceParameter/' + this.deviceId1, {}).then((data) => {
-          if (data.code === '000000') {
-            if (data.data && data.data.gpsParam) {
-              this.gpsParam = data.data.gpsParam;
-            }
-          }
-        })
-      },
-      saveGps() {
-        if (this.gpsParam.timingMode === 1) {
-          if (this.gpsParam.gpsOffset.length == 0) {
-            this.$message.error('请输入帧偏移');
-            return;
-          }
-          if (!intValid(this.gpsParam.gpsOffset)) {
-            this.$message.error('请输入正确的帧偏移');
-            return;
-          }
-        }
-        this.$post('/set/sendGPSParam/' + this.deviceId1 + '/' + this.deviceMonitor.deviceForm, this.gpsParam, "设置命令下发成功").then((data) => {
-          if (data.code === '000000') {
-            this.getParam();
-          }
-        })
       }
     },
     mounted() {
-      this.getParam();
       this.getAllGroups();
       this.getRemote();
       this.getBaseInfo();

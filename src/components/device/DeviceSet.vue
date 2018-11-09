@@ -22,13 +22,11 @@
             <terminal @getDevice="getDevice" class="card-margin"></terminal>
           </el-tab-pane>
           <el-tab-pane label="扫频工具" name="fifth" v-if="(getButtonVial('device:get:sniffer') ||
-                getButtonVial('device:sniffer') || getButtonVial('set:autoSnifferParam'))&&(deviceType=='2'||deviceType=='3'||
-                deviceType=='4'||deviceType=='5'||deviceType=='6'||deviceType=='C'||deviceForm == 'CON_OUTDOOR_POLE')">
-            <gsmScan @getDevice="getDevice" class="card-margin" v-if="(deviceType=='2'||deviceType=='3'||
-            deviceType=='4'||deviceType=='5'||deviceType=='6'||deviceType=='C')&&deviceForm == 'CON_OUTDOOR_MOCRO'"></gsmScan>
+                getButtonVial('device:sniffer') || getButtonVial('set:autoSnifferParam'))">
+            <lteScan @getDevice="getDevice" class="card-margin" v-if="deviceForm == 'CON_OUTDOOR_MOCRO'"></lteScan>
             <scanTool @getDevice="getDevice" class="card-margin" v-if="deviceForm == 'CON_OUTDOOR_POLE'"></scanTool>
           </el-tab-pane>
-          <el-tab-pane label="PA设置" name="sixth" v-if="selfDeviceType == 'ZDK' && (getButtonVial('device:get:deviceStatus')
+          <el-tab-pane label="PA信息" name="sixth" v-if="selfDeviceType == 'ZDK' && (getButtonVial('device:get:deviceStatus')
            || getButtonVial('device:get:deviceParameter:*'))">
             <PaSet @getDevice="getDevice" class="card-margin"></PaSet>
           </el-tab-pane>
@@ -51,7 +49,7 @@
   import deviceStatus from '../device/DeviceStatus';
   import terminal from '../device/TerminalData';
   import scanTool from '../device/NetworkData';
-  import gsmScan from '../device/GsmScan';
+  import lteScan from '../device/LteScan';
   import taskList from '../device/TaskList';
   import LogSet from "../log/LogSet.vue";
   import PaSet from "../device/PaSet.vue";
@@ -63,8 +61,8 @@
         deviceId: this.$route.query.deviceId || '',
         deviceForm: this.$route.query.deviceForm || '',
         groupId: this.$route.query.groupId || '',
+        deviceType: this.$route.query.deviceType || '',
         band4: 0,
-        deviceType: '',
         selfDeviceType: ''
       }
     },
@@ -76,7 +74,10 @@
         sessionStorage.setItem("deviceTab", this.activeName);
       },
       getDevice() {
-        let device = {deviceId: this.deviceId, deviceForm: this.deviceForm, groupId: this.groupId};
+        let device = {
+          deviceId: this.deviceId, deviceForm: this.deviceForm, groupId: this.groupId,
+          deviceType: this.deviceType
+        };
         return device;
       },
       //获取设备的基本信息
@@ -97,6 +98,7 @@
       this.deviceId = this.$route.query.deviceId || '';
       this.deviceForm = this.$route.query.deviceForm || '';
       this.groupId = this.$route.query.groupId || '';
+      this.deviceType = this.$route.query.deviceType || '';
 
       this.getBaseInfo();
 
@@ -107,7 +109,7 @@
     },
     components: {
       baseInfo, setParam, band4, deviceStatus, terminal,
-      scanTool, gsmScan, taskList, LogSet, PaSet
+      scanTool, taskList, LogSet, PaSet, lteScan
     }
   }
 </script>

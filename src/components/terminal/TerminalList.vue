@@ -2,10 +2,19 @@
   <div>
     <section class="content">
       <!--/去重总数{{couple}}条-->
-      <h4 style="text-align: left;margin-top: 0">IMSI数据
-        <!--<span style="margin-left: 10px;font-size: 15px;color: #888" v-show="isShow">总数{{couple}}条</span>-->
-      </h4>
-      <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top: 20px">
+      <el-row style="padding: 0;margin: 0">
+        <el-col :span="12" style="text-align: left" align="left">
+          <h4 style="text-align: left;margin-top: 0">IMSI数据
+            <!--<span style="margin-left: 10px;font-size: 15px;color: #888" v-show="isShow">总数{{couple}}条</span>-->
+          </h4>
+        </el-col>
+        <el-col :span="12" style="text-align: right" align="right">
+          <el-button type="primary" v-show="activeName=='second'&&getButtonVial('terminate:export')"
+                     size="medium" @click="exportData()">导出数据
+          </el-button>
+        </el-col>
+      </el-row>
+      <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="实时查询" name="first">
           <el-row style="margin:0 0 10px 0">
             <el-col :span="18" align="left">
@@ -128,6 +137,8 @@
 <script>
   import {noValidator} from "../../api";
 
+  var fileDownload = require('js-file-download');
+
   export default {
     data() {
       return {
@@ -145,11 +156,11 @@
         firstPage: 0,
         terminateData: [],
         terminateQuery: {
-          size: 5, isp: '', deviceId: this.$route.query.deviceId || '', netType: '', imsi: '',
+          size: 5, deviceId: this.$route.query.deviceId || '',
           groupId: JSON.parse(sessionStorage.getItem("user")).groupId
         },
         query: {
-          size: 100, isp: '', deviceId: this.$route.query.deviceId || '', netType: '', imsi: '',
+          size: 100, deviceId: this.$route.query.deviceId || '',
           groupId: JSON.parse(sessionStorage.getItem("user")).groupId
         },
         page: 1,
@@ -177,13 +188,30 @@
       getButtonVial(msg) {
         return $.Button.buttonValidator(msg);
       },
+      //导出数据
+      exportData() {
+        var param = Object.assign({}, this.query);
+        delete param['size'];
+        delete param['netType'];
+        if (this.cTime) {//时间戳的毫秒转化成秒
+          param.startUploadTime = this.cTime[0] / 1000;
+          param.endUploadTime = this.cTime[1] / 1000;
+        }
+        this.axios.post('/terminate/export', param, {responseType: 'arraybuffer'}).then((res) => {
+          let fileStr = res.headers['content-disposition'].split(";")[1].split("filename=")[1];
+          let fileName = decodeURIComponent(fileStr);
+          fileDownload(res.data, fileName);
+        }).catch(function (res) {
+        });
+      },
       handleClick(tab, event) {
         if (tab.name === 'first') {
           this.isShow = false;
           this.getTerminateData();
-//          this.dataTask();
+          this.dataTask();
         } else {
-//          clearInterval(this.intervalid);
+          clearInterval(this.intervalid);
+          this.intervalid = null;
           this.isShow = true;
           this.getData();
           this.getCouple();
@@ -361,7 +389,7 @@
       },
       clearTerminateData() {
         this.terminateQuery = {
-          size: 5, isp: '', deviceId: this.$route.query.deviceId || '', netType: '', imsi: '',
+          size: 5, deviceId: this.$route.query.deviceId || '',
           groupId: JSON.parse(sessionStorage.getItem("user")).groupId
         };
         this.terminateData = [];
@@ -369,7 +397,7 @@
       },
       clearData() {
         this.query = {
-          size: 100, isp: '', deviceId: this.$route.query.deviceId || '', netType: '', imsi: '',
+          size: 100, deviceId: this.$route.query.deviceId || '',
           groupId: JSON.parse(sessionStorage.getItem("user")).groupId
         };
         this.cTime = [new Date(($.Data.formatDate(new Date(), 'yyyy-MM-dd') + " 00:00:00").replace(/-/g, '/')).getTime(),

@@ -77,6 +77,12 @@
               <el-form-item label="重定向载波频点" prop="redirectEarfcn">
                 <el-input v-model.number="opDeviceParameter.redirectEarfcn" :maxlength=10></el-input>
               </el-form-item>
+              <el-form-item label="同步模式" required align="left" v-if="getmoduleID()==0">
+                <el-select v-model="opDeviceParameter.syncMode" placeholder="同步模式" filterable style="width: 100%">
+                  <el-option v-for="item in syncModes" :key="item.value" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
             </el-col>
             <el-col :span="11" :offset="2">
               <el-form-item label="tac周期" prop="tacPeriod">
@@ -120,7 +126,7 @@
             </el-form-item>
             <el-form-item label="优先级" style="margin: 0">
               <el-tooltip effect="dark" content="现网频点优先级" placement="bottom">
-                <el-input v-model.number="tab.priority" :maxlength=10 @change="changeOffset"
+                <el-input v-model.number="tab.priority" :maxlength=10 @change="changePro"
                           style="width: 80px"></el-input>
               </el-tooltip>
             </el-form-item>
@@ -139,6 +145,10 @@
                              :value="item.value"></el-option>
                 </el-select>
               </el-tooltip>
+            </el-form-item>
+            <el-form-item label="帧偏移" style="margin: 0" v-if="getmoduleID()==0">
+              <el-input v-model.number="tab.frameOffset" :maxlength=10 @change="changeOffset"
+                        style="width: 100px"></el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -235,7 +245,7 @@
         dialogWidth: $.Device.isPC() ? '380px' : '300px',
         param: {moduleID: 0, datatag: 'M'},
         opDeviceParameter: {
-          redirectEarfcn: 37900, tac: 1, tacPeriod: '180', bandWidth: 5
+          redirectEarfcn: 37900, tac: 1, tacPeriod: '180', bandWidth: 5, syncMode: 0
         },
         activeName: [{moduleID: 0, name: '移动', type: 'M'}, {moduleID: 1, name: '联通', type: 'U'},
           {moduleID: 2, name: '电信', type: 'T'}],
@@ -246,6 +256,7 @@
         bands: [{value: 900, label: 900}, {value: 1800, label: 1800}],
         bandwidths: [{value: 1, label: '3MHz'}, {value: 2, label: '5MHz'}, {value: 3, label: '10MHz'},
           {value: 4, label: '15MHz'}, {value: 5, label: '20MHz'}],
+        syncModes: [{value: 1, label: 'gps同步'}, {value: 2, label: '空口同步'}],
         rules: {
           downFrequency: [
             {required: true, message: '请输入下行频点', trigger: "blur"}, {validator: numVal, trigger: "change,blur"}],
@@ -268,7 +279,7 @@
         plmns: [{type: '460.00', name: '460.00'}, {type: '460.01', name: '460.01'}, {type: '460.11', name: '460.11'}],
         frequencyList: [{
           upFrequency: 37900, downFrequency: 37900, plmn: '460.00', rsrp: 0,
-          priority: 0, pci: 5, powerLevel: 0
+          priority: 0, pci: 5, powerLevel: 0, frameOffset: 0
         }],
         powers: [{value: 0, label: 6}, {value: 3, label: 5}, {value: 6, label: 4}, {value: 9, label: 3},
           {value: 12, label: 2}, {value: 15, label: 1}],
@@ -309,7 +320,7 @@
       plusPlmn() {
         this.frequencyList.push({
           upFrequency: this.up, downFrequency: this.down, plmn: this.plmn, rsrp: 0,
-          priority: 0, pci: this.pci, powerLevel: 0
+          priority: 0, pci: this.pci, powerLevel: 0, frameOffset: 0
         });
       },
       //删除跳频
@@ -336,11 +347,21 @@
         }
         return isVaild;
       },
-      changeOffset(val) {
+      changePro(val) {
         let isVaild = true;
         if (val) {
           if (!numValid(val)) {
             this.$message.error('请输入正确的优先级');
+            isVaild = false;
+          }
+        }
+        return isVaild;
+      },
+      changeOffset(val) {
+        let isVaild = true;
+        if (val) {
+          if (!numValid(val)) {
+            this.$message.error('请输入正确的帧偏移');
             isVaild = false;
           }
         }
@@ -389,7 +410,7 @@
         //初始化
         if (this.getActiveType() === 'M') {//移动4G38/40
           this.param = {moduleID: 0, datatag: 'M'};
-          this.opDeviceParameter = {redirectEarfcn: 37900, tac: 1, tacPeriod: 180, bandWidth: 5};
+          this.opDeviceParameter = {redirectEarfcn: 37900, tac: 1, tacPeriod: 180, bandWidth: 5, syncMode: 0};
         } else if (this.getActiveType() === 'U') {//联通4G
           this.param = {moduleID: 1, datatag: 'U'};
           this.opDeviceParameter = {redirectEarfcn: 1650, tac: 1, tacPeriod: 180, bandWidth: 3};
@@ -418,7 +439,7 @@
           this.pci = 5;
           this.frequencyList = [{
             upFrequency: this.up, downFrequency: this.down, plmn: this.plmn, rsrp: 0,
-            priority: 0, pci: this.pci, powerLevel: 0
+            priority: 0, pci: this.pci, powerLevel: 0, frameOffset: 0
           }];
         } else if (this.getActiveType() === 'U') {//联通4G
           this.plmn = '460.01';
@@ -427,7 +448,7 @@
           this.pci = 6;
           this.frequencyList = [{
             upFrequency: this.up, downFrequency: this.down, plmn: this.plmn, rsrp: 0,
-            priority: 0, pci: this.pci, powerLevel: 0
+            priority: 0, pci: this.pci, powerLevel: 0, frameOffset: 0
           }];
         } else if (this.getActiveType() === 'T') {//电信4G
           this.plmn = '460.11';
@@ -436,12 +457,12 @@
           this.pci = 7;
           this.frequencyList = [{
             upFrequency: this.up, downFrequency: this.down, plmn: this.plmn, rsrp: 0,
-            priority: 0, pci: this.pci, powerLevel: 0
+            priority: 0, pci: this.pci, powerLevel: 0, frameOffset: 0
           }];
         } else {
           this.frequencyList = [{
             upFrequency: 0, downFrequency: 0, plmn: '460.00', rsrp: 0,
-            priority: 0, pci: 5, powerLevel: 0
+            priority: 0, pci: 5, powerLevel: 0, frameOffset: 0
           }];
         }
       },

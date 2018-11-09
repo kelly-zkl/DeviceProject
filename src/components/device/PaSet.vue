@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <h4 style="text-align: left;margin-top: 0">PA设置</h4>
+      <h4 style="text-align: left;margin-top: 0">PA信息</h4>
       <div class="content add-appdiv">
         <el-form :inline="true" v-for="(item,idx) in paParam" :key="item.index" align="left">
           <el-form-item

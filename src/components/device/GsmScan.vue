@@ -2,7 +2,7 @@
   <div>
     <section class="content">
       <el-form label-width="120px" label-position="left" ref="gsmSniffer" :model="gsmSniffer" :rules="rules">
-        <h4 style="text-align: left;margin-top: 0">扫频设置</h4>
+        <h4 style="text-align: left;margin-top: 0">GSM扫频设置</h4>
         <div class="center-block add-appdiv">
           <el-form-item label="扫频模式" align="left" style="margin: 20px 0 0 15px" prop="snifferMode">
             <el-select v-model="gsmSniffer.snifferMode" placeholder="请选择" filterable>
@@ -37,7 +37,7 @@
           </el-form-item>
         </div>
       </el-form>
-      <h4 style="text-align: left">扫频数据</h4>
+      <h4 style="text-align: left">GSM扫频数据</h4>
       <el-tabs v-model="activeItem" @tab-click="handleClick" style="margin-left: 20px">
         <el-tab-pane :label="tab.name" v-for="tab in activeName" :key="tab.type" :name="tab.type"></el-tab-pane>
       </el-tabs>
@@ -48,7 +48,8 @@
         <el-table-column align="left" label="c2" prop="c2" :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" label="rsrp" prop="rsrp" :formatter="formatterAddress"></el-table-column>
         <el-table-column align="left" label="邻区列表" prop="nCellInfo" :formatter="formatterAddress"></el-table-column>
-        <el-table-column align="left" label="上报时间" prop="upTime" :formatter="formatterAddress"></el-table-column>
+        <el-table-column align="left" label="上报时间" prop="upTime" :formatter="formatterAddress"
+                         min-width="170" max-width="200"></el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
             <el-button type="text" @click="cells=scope.row.nCellInfo;runCellList=true">查看邻区列表</el-button>
@@ -85,8 +86,6 @@
         rules: {
           snifferMode: [{required: true, message: '请输入选择扫频模式', trigger: "blur"}],
           selectFreqMode: [{required: true, message: '请输入选择选频模式', trigger: "blur"}],
-          runTime: [{required: true, message: '请输入扫频时间', trigger: "blur"}],
-          snifferCycle: [{required: true, message: '请输入扫频周期', trigger: "blur"}]
         }
       }
     },
@@ -102,6 +101,15 @@
             if (param.snifferMode === 0) {
               delete param['runTime'];
               delete param['snifferCycle'];
+            } else {
+              if (!param.runTime) {
+                this.$message.error("选择时间");
+                return;
+              }
+              if (!param.snifferCycle) {
+                this.$message.error("输入扫频间隔");
+                return;
+              }
             }
             this.$post('set/gsmSniffer/' + this.deviceId, param, '设置成功', '设置失败');
           }
@@ -119,7 +127,6 @@
           return row.nCellInfo ? row.nCellInfo.length + '个' : '0个';
         } else {
           return row[column.property];
-//            ? row[column.property] : '--';
         }
       },
       //扫频数据列表

@@ -134,7 +134,12 @@
           , {value: 12, label: '3G上网卡拨号日志'}, {value: 13, label: '4G上网卡拨号日志'}],
         options: [{value: 2, label: '电信'}, {value: 0, label: '移动'}, {value: 1, label: '联通'},
           {value: '', label: '全部基带板'}],
-        options1: [{value: 2, label: '电信'}, {value: 0, label: '移动'}, {value: 1, label: '联通'}],
+        options1: [{value: 0, label: '0'}, {value: 1, label: '1'}, {value: 2, label: '2'}, {value: 3, label: '3'},
+          {value: 4, label: '4'}, {value: 5, label: '5'}, {value: 6, label: '6'}, {value: 7, label: '7'},
+          {value: 8, label: '8'}, {value: 9, label: '9'}, {value: 10, label: '10'}, {value: 11, label: '11'},
+          {value: 12, label: '12'}, {value: 13, label: '13'}, {value: 14, label: '14'}, {value: 15, label: '15'},
+          {value: 16, label: '16'}, {value: 17, label: '17'}, {value: 18, label: '18'}, {value: 19, label: '19'},
+          {value: 20, label: '20'}],
         logTypes: [{value: 0, label: 'srv'}, {value: 1, label: 'enb_deamon'}, {value: 2, label: 'enb'},
           {value: 3, label: 'kernel'}, {value: 4, label: 'logserver'}],
         deviceList: [],
@@ -220,7 +225,7 @@
         } else if (column.property === 'moduleId') {
           return row.moduleId == 0 ? '移动' : row.moduleId == 1 ? '联通' : row.moduleId == 2 ? '电信' : '--';
         } else if (column.property === 'logType') {
-          return row.logType == 0 ? 'srv' : 'enb_deamon';
+          return row.logType == 0 ? 'srv' : row.logType == 1 ? 'enb_deamon' : row.logType == 2 ? 'enb' : row.logType == 3 ? 'kernel' : row.logType == 4 ? 'logserver' : '--';
         } else if (column.property === 'createTime') {
           return row.createTime ? $.Data.formatDate(new Date(row.createTime * 1000), 'yyyy-MM-dd hh:mm:ss') : '--';
         } else if (column.property === 'logStartTime') {
