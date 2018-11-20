@@ -21,13 +21,13 @@
               <el-form-item label="pci" prop="pci">
                 <el-tooltip placement="bottom">
                   <div slot="content">物理小区标识 取值范围：[0-504]</div>
-                  <el-input v-model="opDeviceParameter.pci" :maxlength=3></el-input>
+                  <el-input v-model.number="opDeviceParameter.pci" :maxlength=3></el-input>
                 </el-tooltip>
               </el-form-item>
               <el-form-item label="lac" prop="lac">
                 <el-tooltip placement="bottom">
                   <div slot="content">位置区码 取值范围：[0001－FFFEH]，码组0000H和FFFFH不可以使用</div>
-                  <el-input v-model="opDeviceParameter.lac" :maxlength=4></el-input>
+                  <el-input v-model.number="opDeviceParameter.lac" :maxlength=4></el-input>
                 </el-tooltip>
               </el-form-item>
               <el-form-item label="重复上号间隔" prop="reCapFilterPeriod">
@@ -41,7 +41,7 @@
                     <br/>FDD:band1[0-599],band3[1200-1949]
                     <br/>TDD：移动-38 [37750-38249],移动-39 [38250-38649],移动-40 [38650-39649],移动-41 [39650-41589]
                   </div>
-                  <el-input v-model="opDeviceParameter.bcc" :maxlength=5 @change="changeBcc"
+                  <el-input v-model.number="opDeviceParameter.bcc" :maxlength=5 @change="changeBcc"
                             @blur="changeBcc"></el-input>
                 </el-tooltip>
               </el-form-item>
@@ -71,7 +71,7 @@
               <el-form-item label="tac">
                 <el-tooltip placement="bottom">
                   <div slot="content">跟踪区域码 取值范围：[0001－FFFEH]，码组0000H和FFFFH不可以使用</div>
-                  <el-input v-model="opDeviceParameter.tac" :maxlength=4 readonly></el-input>
+                  <el-input v-model.number="opDeviceParameter.tac" :maxlength=4 readonly></el-input>
                 </el-tooltip>
               </el-form-item>
               <el-form-item label="重定向载波频点" prop="redirectEarfcn">
@@ -116,7 +116,7 @@
             <el-form-item label="pci" prop="pci">
               <el-tooltip placement="bottom">
                 <div slot="content">物理小区标识 取值范围：[0-504]</div>
-                <el-input v-model="tab.pci" :maxlength=3 style="width: 80px"></el-input>
+                <el-input v-model.number="tab.pci" :maxlength=3 style="width: 80px"></el-input>
               </el-tooltip>
             </el-form-item>
             <el-form-item label="plmn" style="margin: 0">
@@ -245,7 +245,7 @@
         dialogWidth: $.Device.isPC() ? '380px' : '300px',
         param: {moduleID: 0, datatag: 'M'},
         opDeviceParameter: {
-          redirectEarfcn: 37900, tac: 1, tacPeriod: '180', bandWidth: 5, syncMode: 0
+          redirectEarfcn: 37900, tac: 1, tacPeriod: 180, bandWidth: 5, syncMode: 0
         },
         activeName: [{moduleID: 0, name: '移动', type: 'M'}, {moduleID: 1, name: '联通', type: 'U'},
           {moduleID: 2, name: '电信', type: 'T'}],
@@ -416,16 +416,16 @@
           this.opDeviceParameter = {redirectEarfcn: 1650, tac: 1, tacPeriod: 180, bandWidth: 3};
         } else if (this.getActiveType() === 'T') {//电信4G
           this.param = {moduleID: 2, datatag: 'T'};
-          this.opDeviceParameter = {redirectEarfcn: 100, tac: 1, tacPeriod: '180', bandWidth: 3};
+          this.opDeviceParameter = {redirectEarfcn: 100, tac: 1, tacPeriod: 180, bandWidth: 3};
         } else if (this.getActiveType() === 'GSMCMCC') {
           this.opDeviceParameter = {
             network: 'GSMCMCC', band: 900, bcc: 1, lac: 9, pci: 1,
-            tacPeriod: '180', plmn: "460.11", reCapFilterPeriod: 300, cellId: 3
+            tacPeriod: 180, plmn: "460.11", reCapFilterPeriod: 300, cellId: 3
           };
         } else if (this.getActiveType() === 'GSMCMUC') {
           this.opDeviceParameter = {
             network: 'GSMCMUC', band: 900, bcc: 96, lac: 9, pci: 1,
-            tacPeriod: '180', plmn: "460.11", reCapFilterPeriod: 300, cellId: 3
+            tacPeriod: 180, plmn: "460.11", reCapFilterPeriod: 300, cellId: 3
           };
         }
         this.defaultFrequencyList();
@@ -494,7 +494,7 @@
         this.$post('device/get/deviceParameter/' + this.deviceId1, {}).then((data) => {
           if (data.code === '000000') {
             if (data.data) {
-              if (this.getmoduleID() < 3) {
+              if (this.getmoduleID() > -1) {
                 if (data.data.subModuleParam && data.data.subModuleParam.length > 0) {
                   data.data.subModuleParam.forEach((subModuleParam) => {
                     if (subModuleParam.moduleId === this.getmoduleID()) {

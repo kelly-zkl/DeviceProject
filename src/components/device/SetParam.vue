@@ -21,12 +21,12 @@
             <!--<el-input v-model="opDeviceParameter.upFrequency" readonly></el-input>-->
             <!--</el-form-item>-->
             <el-form-item label="下行频点" v-show="deviceForm=='CON_OUTDOOR_MOCRO'" prop="downFrequency">
-              <el-input v-model="opDeviceParameter.downFrequency" @change="changeDown"></el-input>
+              <el-input v-model.number="opDeviceParameter.downFrequency" @change="changeDown"></el-input>
             </el-form-item>
             <el-form-item label="mcc" prop="mcc" v-if="deviceForm=='CON_OUTDOOR_POLE'">
               <el-tooltip placement="bottom">
                 <div slot="content">移动国家号：由三个十进制数组成，编码范围为十进制的000－999,中国-460</div>
-                <el-input v-model="opDeviceParameter.mcc" :maxlength=3></el-input>
+                <el-input v-model.number="opDeviceParameter.mcc" :maxlength=3></el-input>
               </el-tooltip>
             </el-form-item>
             <el-form-item label="mnc" prop="mnc" required v-if="deviceForm=='CON_OUTDOOR_POLE'">
@@ -49,7 +49,7 @@
             </el-form-item>
             <el-form-item label="帧偏移" prop="frameOffset"
                           v-if="getActiveType()=='M'||(getActiveType() =='TDDLTE_4' || getActiveType() =='TDDLTE_5')">
-              <el-input v-model="opDeviceParameter.frameOffset" :maxlength=10></el-input>
+              <el-input v-model.number="opDeviceParameter.frameOffset" :maxlength=10></el-input>
             </el-form-item>
 
             <el-form-item label="重定向载波频点" v-show="deviceForm=='CON_OUTDOOR_MOCRO'">
@@ -60,7 +60,7 @@
             <el-form-item label="pci" prop="pci" v-show="getActiveType() != 'GSM_1' || deviceForm=='CON_OUTDOOR_MOCRO'">
               <el-tooltip placement="bottom">
                 <div slot="content">物理小区标识 取值范围：[0-504]</div>
-                <el-input v-model="opDeviceParameter.pci" :maxlength=3></el-input>
+                <el-input v-model.number="opDeviceParameter.pci" :maxlength=3></el-input>
               </el-tooltip>
             </el-form-item>
             <el-form-item :label="labelBcc" prop="bcc" v-show="deviceForm=='CON_OUTDOOR_POLE'">
@@ -69,21 +69,22 @@
                   <br/>FDD:band1[0-599],band3[1200-1949]
                   <br/>TDD：移动-38 [37750-38249],移动-39 [38250-38649],移动-40 [38650-39649],移动-41 [39650-41589]
                 </div>
-                <el-input v-model="opDeviceParameter.bcc" :maxlength=5 @change="changeBcc" @blur="changeBcc"></el-input>
+                <el-input v-model.number="opDeviceParameter.bcc" :maxlength=5 @change="changeBcc"
+                          @blur="changeBcc"></el-input>
               </el-tooltip>
             </el-form-item>
             <el-form-item label="lac" prop="lac"
                           v-show="deviceForm=='CON_OUTDOOR_POLE' && (getActiveType() == 'GSM_1')">
               <el-tooltip placement="bottom">
                 <div slot="content">位置区码 取值范围：[0001－FFFEH]，码组0000H和FFFFH不可以使用</div>
-                <el-input v-model="opDeviceParameter.lac" :maxlength=4></el-input>
+                <el-input v-model.number="opDeviceParameter.lac" :maxlength=4></el-input>
               </el-tooltip>
             </el-form-item>
             <el-form-item label="tac"
                           v-show="(getActiveType() != 'GSM_1')|| deviceForm=='CON_OUTDOOR_MOCRO'">
               <el-tooltip placement="bottom">
                 <div slot="content">跟踪区域码 取值范围：[0001－FFFEH]，码组0000H和FFFFH不可以使用</div>
-                <el-input v-model="opDeviceParameter.tac" :maxlength=4 readonly></el-input>
+                <el-input v-model.number="opDeviceParameter.tac" :maxlength=4 readonly></el-input>
               </el-tooltip>
             </el-form-item>
             <el-form-item label="bandWidth" required v-show="deviceForm=='CON_OUTDOOR_MOCRO'" align="left">
@@ -94,7 +95,7 @@
             </el-form-item>
             <el-form-item label="同步频点" prop="syncEarfcn"
                           v-if="deviceForm=='CON_OUTDOOR_POLE' && (getActiveType() =='TDDLTE_4' || getActiveType() =='TDDLTE_5')">
-              <el-input v-model="opDeviceParameter.syncEarfcn" :maxlength=10></el-input>
+              <el-input v-model.number="opDeviceParameter.syncEarfcn" :maxlength=10></el-input>
             </el-form-item>
             <el-form-item label="plmn" align="left" v-show="deviceForm=='CON_OUTDOOR_MOCRO'">
               <el-radio-group v-model="hopParam.plmn" align="left">
@@ -111,7 +112,7 @@
             <el-form-item label="重复抓取时间" prop="tacPeriod" style="margin: 0">
               <el-row>
                 <el-col :span="16" style="margin-right: 10px">
-                  <el-input v-model="opDeviceParameter.tacPeriod" :maxlength=4 style="width: 100%"
+                  <el-input v-model.number="opDeviceParameter.tacPeriod" :maxlength=4 style="width: 100%"
                             :disable="!getButtonVial('set:repeatCatch')">
                     <template slot="append">秒</template>
                   </el-input>
@@ -125,7 +126,7 @@
                           v-show="getButtonVial('set:ccPeriod') && deviceForm=='CON_OUTDOOR_POLE'">
               <el-row>
                 <el-col :span="16" style="margin-right: 10px">
-                  <el-input v-model="opDeviceParameter.ccPeriod" :maxlength=4 style="width: 100%"
+                  <el-input v-model.number="opDeviceParameter.ccPeriod" :maxlength=4 style="width: 100%"
                             :disable="!getButtonVial('set:ccPeriod')">
                     <template slot="append">分</template>
                   </el-input>

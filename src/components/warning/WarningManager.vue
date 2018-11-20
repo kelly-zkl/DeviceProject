@@ -52,7 +52,7 @@
             <el-table :data="warningList" v-loading="listLoading" class="center-block"
                       @selection-change="selsChange" stripe>
               <el-table-column type="selection" width="50" align="left"></el-table-column>
-              <el-table-column align="left" label="告警名称" min-width="150"
+              <el-table-column align="left" label="告警类型" min-width="150"
                                max-width="250" :formatter="formatterType"></el-table-column>
               <el-table-column align="left" prop="msg" label="告警详情" min-width="150"
                                max-width="250" :formatter="formatterAddress"></el-table-column>
@@ -137,7 +137,7 @@
             </el-row>
             <el-table :data="warningList" v-loading="listLoading" class="center-block" stripe>
               <el-table-column align="center" type="index" label="序号" width="65"></el-table-column>
-              <el-table-column align="left" label="告警名称" min-width="100"
+              <el-table-column align="left" label="告警类型" min-width="100"
                                max-width="200" :formatter="formatterType"></el-table-column>
               <el-table-column align="left" prop="msg" label="告警详情" min-width="150"
                                max-width="250" :formatter="formatterAddress"></el-table-column>

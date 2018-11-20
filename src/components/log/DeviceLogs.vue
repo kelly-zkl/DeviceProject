@@ -35,7 +35,7 @@
                      size="medium" v-show="getButtonVial('device:log:extract')">提取日志
           </el-button>
           <el-button style="margin-top: 10px" type="primary" @click.stop="deleteLog()"
-                     size="medium" :disabled="sels.length==0">删除
+                     size="medium" :disabled="sels.length==0" v-show="getButtonVial('device:log:delete')">删除
           </el-button>
         </el-col>
       </el-row>
@@ -58,7 +58,9 @@
                          :formatter="formatterAddress"></el-table-column>
         <el-table-column align="center" label="操作" width="180">
           <template slot-scope="scope">
-            <el-button type="text" @click="sels = [];sels.push(scope.row);deleteLog()">删除</el-button>
+            <el-button type="text" @click="sels = [];sels.push(scope.row);deleteLog()"
+                       v-show="getButtonVial('device:log:delete')">删除
+            </el-button>
             <a v-bind:href="scope.row.logUrl" target="_blank">下载</a>
           </template>
         </el-table-column>
