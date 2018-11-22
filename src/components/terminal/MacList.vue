@@ -105,6 +105,7 @@
       exportData() {
         var param = Object.assign({}, this.query);
         delete param['size'];
+        delete param['createTime'];
         if (this.cTime) {//时间戳的毫秒转化成秒
           param.startUploadTime = this.cTime[0] / 1000;
           param.endUploadTime = this.cTime[1] / 1000;

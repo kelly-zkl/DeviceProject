@@ -193,6 +193,7 @@
       exportData() {
         var param = Object.assign({}, this.query);
         delete param['size'];
+        delete param['uptime'];
         delete param['netType'];
         if (this.cTime) {//时间戳的毫秒转化成秒
           param.startUploadTime = this.cTime[0] / 1000;
